@@ -13,7 +13,10 @@ import {
   Plus,
   Search,
   Send,
+  SlidersHorizontal,
   Undo2,
+  UserRoundCheck,
+  UserRoundX,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -472,19 +475,20 @@ export function AnnouncementsPage() {
       {/* HEADER */}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
             <Megaphone className="h-5 w-5" />
-
-            <h1 className="text-2xl font-bold tracking-tight">
-              Announcements
-            </h1>
           </div>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Create, publish, and manage
-            barangay announcements.
-          </p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+              Announcements
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Create, publish, and manage barangay announcements.
+            </p>
+          </div>
         </div>
 
         <Button
@@ -492,6 +496,7 @@ export function AnnouncementsPage() {
           onClick={
             handleAdd
           }
+          className="h-10 rounded-xl bg-emerald-700 px-4 font-medium text-white hover:bg-emerald-800"
         >
           <Plus className="mr-2 h-4 w-4" />
 
@@ -501,9 +506,15 @@ export function AnnouncementsPage() {
 
       {/* FILTERS */}
 
-      <div className="grid gap-3 lg:grid-cols-3">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="mb-3 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <SlidersHorizontal className="h-4 w-4 text-emerald-700" />
+          Search & Filters
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-3">
+          <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
           <Input
             placeholder="Search announcements..."
@@ -519,7 +530,7 @@ export function AnnouncementsPage() {
 
               resetPage()
             }}
-            className="pl-9"
+            className="h-10 rounded-xl border-slate-200 bg-white pl-9"
           />
         </div>
 
@@ -539,7 +550,7 @@ export function AnnouncementsPage() {
 
             resetPage()
           }}
-          className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="all">
             All statuses
@@ -570,7 +581,7 @@ export function AnnouncementsPage() {
 
             resetPage()
           }}
-          className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="any">
             All audiences
@@ -592,48 +603,75 @@ export function AnnouncementsPage() {
             Specific Purok
           </option>
         </select>
-      </div>
+        </div>
+      </section>
 
       {/* ERROR */}
 
       {error && (
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"
+        >
           Unable to load announcements.
         </div>
       )}
 
       {/* TABLE */}
 
-      <div className="overflow-hidden rounded-md border">
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-2 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-semibold text-slate-950">
+              Announcements
+            </h3>
+
+            <p className="mt-1 text-sm text-slate-500">
+              {totalAnnouncements}{" "}
+              {totalAnnouncements === 1
+                ? "announcement"
+                : "announcements"}{" "}
+              found
+            </p>
+          </div>
+
+          {isFetching &&
+            !isLoading && (
+              <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                Updating...
+              </span>
+            )}
+        </div>
+
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>
+              <TableRow className="border-slate-200 bg-slate-50 hover:bg-slate-50">
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Announcement
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Audience
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Publish Date
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Expiry
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Publication
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Status
                 </TableHead>
 
-                <TableHead className="text-right">
+                <TableHead className="text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Actions
                 </TableHead>
               </TableRow>
@@ -646,7 +684,7 @@ export function AnnouncementsPage() {
                     colSpan={
                       7
                     }
-                    className="h-24 text-center text-muted-foreground"
+                    className="h-32 text-center text-sm text-slate-500"
                   >
                     Loading announcements...
                   </TableCell>
@@ -661,9 +699,21 @@ export function AnnouncementsPage() {
                       colSpan={
                         7
                       }
-                      className="h-24 text-center text-muted-foreground"
+                      className="h-40 text-center"
                     >
-                      No announcements found.
+                      <div className="mx-auto flex max-w-sm flex-col items-center">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                          <Megaphone className="h-5 w-5" />
+                        </div>
+
+                        <p className="mt-3 font-medium text-slate-800">
+                          No announcements found
+                        </p>
+
+                        <p className="mt-1 text-sm text-slate-500">
+                          Try changing the search or filter options.
+                        </p>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )}
@@ -677,6 +727,7 @@ export function AnnouncementsPage() {
                       key={
                         announcement.id
                       }
+                      className="border-slate-100 transition-colors hover:bg-slate-50/80"
                     >
                       {/* ANNOUNCEMENT */}
 
@@ -687,14 +738,14 @@ export function AnnouncementsPage() {
                               <Pin className="h-3.5 w-3.5 shrink-0" />
                             )}
 
-                            <p className="font-medium">
+                            <p className="font-medium text-slate-950">
                               {
                                 announcement.title
                               }
                             </p>
                           </div>
 
-                          <p className="mt-1 text-xs text-muted-foreground">
+                          <p className="mt-1 text-xs text-slate-500">
                             {truncateContent(
                               announcement.content
                             )}
@@ -705,7 +756,7 @@ export function AnnouncementsPage() {
                       {/* AUDIENCE */}
 
                       <TableCell>
-                        <span className="capitalize">
+                        <span className="capitalize text-slate-700">
                           {getAudienceLabel(
                             announcement
                           )}
@@ -714,7 +765,7 @@ export function AnnouncementsPage() {
 
                       {/* PUBLISH */}
 
-                      <TableCell className="whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap text-slate-600">
                         {formatDateTime(
                           announcement.publish_at
                         )}
@@ -722,7 +773,7 @@ export function AnnouncementsPage() {
 
                       {/* EXPIRY */}
 
-                      <TableCell className="whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap text-slate-600">
                         {formatDateTime(
                           announcement.expires_at
                         )}
@@ -732,12 +783,13 @@ export function AnnouncementsPage() {
 
                       <TableCell>
                         <span
-                          className={
+                          className={[
+                            "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
                             announcement.status ===
                             "published"
-                              ? "font-medium text-green-700"
-                              : "font-medium text-amber-700"
-                          }
+                              ? "bg-emerald-50 text-emerald-700"
+                              : "bg-amber-50 text-amber-700",
+                          ].join(" ")}
                         >
                           {announcement.status ===
                           "published"
@@ -750,12 +802,22 @@ export function AnnouncementsPage() {
 
                       <TableCell>
                         <span
-                          className={
+                          className={[
+                            "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
                             announcement.is_active
-                              ? "font-medium text-green-700"
-                              : "font-medium text-muted-foreground"
-                          }
+                              ? "bg-emerald-50 text-emerald-700"
+                              : "bg-slate-100 text-slate-600",
+                          ].join(" ")}
                         >
+                          <span
+                            className={[
+                              "h-1.5 w-1.5 rounded-full",
+                              announcement.is_active
+                                ? "bg-emerald-500"
+                                : "bg-slate-400",
+                            ].join(" ")}
+                          />
+
                           {announcement.is_active
                             ? "Active"
                             : "Inactive"}
@@ -778,8 +840,9 @@ export function AnnouncementsPage() {
                             disabled={
                               isBusy
                             }
+                            className="rounded-lg border-slate-200 bg-white"
                           >
-                            <Edit className="mr-1 h-3.5 w-3.5" />
+                            <Edit className="mr-1.5 h-3.5 w-3.5" />
 
                             Edit
                           </Button>
@@ -796,17 +859,23 @@ export function AnnouncementsPage() {
                             disabled={
                               isBusy
                             }
+                            className={
+                              announcement.status ===
+                              "published"
+                                ? "rounded-lg border-amber-200 bg-white text-amber-700 hover:bg-amber-50 hover:text-amber-800"
+                                : "rounded-lg border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800"
+                            }
                           >
                             {announcement.status ===
                             "published" ? (
                               <>
-                                <Undo2 className="mr-1 h-3.5 w-3.5" />
+                                <Undo2 className="mr-1.5 h-3.5 w-3.5" />
 
                                 Unpublish
                               </>
                             ) : (
                               <>
-                                <Send className="mr-1 h-3.5 w-3.5" />
+                                <Send className="mr-1.5 h-3.5 w-3.5" />
 
                                 Publish
                               </>
@@ -825,16 +894,21 @@ export function AnnouncementsPage() {
                             disabled={
                               isBusy
                             }
+                            className={
+                              announcement.is_pinned
+                                ? "rounded-lg border-slate-300 bg-slate-50 text-slate-700 hover:bg-slate-100"
+                                : "rounded-lg border-slate-200 bg-white text-slate-700 hover:bg-slate-50"
+                            }
                           >
                             {announcement.is_pinned ? (
                               <>
-                                <PinOff className="mr-1 h-3.5 w-3.5" />
+                                <PinOff className="mr-1.5 h-3.5 w-3.5" />
 
                                 Unpin
                               </>
                             ) : (
                               <>
-                                <Pin className="mr-1 h-3.5 w-3.5" />
+                                <Pin className="mr-1.5 h-3.5 w-3.5" />
 
                                 Pin
                               </>
@@ -853,7 +927,18 @@ export function AnnouncementsPage() {
                             disabled={
                               isBusy
                             }
+                            className={
+                              announcement.is_active
+                                ? "rounded-lg border-red-200 bg-white text-red-700 hover:bg-red-50 hover:text-red-800"
+                                : "rounded-lg border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800"
+                            }
                           >
+                            {announcement.is_active ? (
+                              <UserRoundX className="mr-1.5 h-3.5 w-3.5" />
+                            ) : (
+                              <UserRoundCheck className="mr-1.5 h-3.5 w-3.5" />
+                            )}
+
                             {announcement.is_active
                               ? "Deactivate"
                               : "Activate"}
@@ -869,23 +954,23 @@ export function AnnouncementsPage() {
 
         {/* PAGINATION */}
 
-        <div className="flex flex-col gap-3 border-t p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-50/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500">
               Showing{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   startRecord
                 }
               </span>{" "}
               to{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   endRecord
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalAnnouncements
                 }
@@ -898,7 +983,7 @@ export function AnnouncementsPage() {
 
             {isFetching &&
               !isLoading && (
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-xs text-slate-500">
                   Updating results...
                 </p>
               )}
@@ -914,6 +999,7 @@ export function AnnouncementsPage() {
                   1 ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -932,15 +1018,15 @@ export function AnnouncementsPage() {
               Previous
             </Button>
 
-            <span className="px-2 text-sm text-muted-foreground">
+            <span className="min-w-[92px] text-center text-sm text-slate-500">
               Page{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   page
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalPages
                 }
@@ -956,6 +1042,7 @@ export function AnnouncementsPage() {
                   totalPages ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -975,7 +1062,7 @@ export function AnnouncementsPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* DIALOG */}
 

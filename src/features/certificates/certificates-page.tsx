@@ -13,6 +13,7 @@ import {
   Plus,
   Search,
   ShieldCheck,
+  SlidersHorizontal,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -593,18 +594,20 @@ export function CertificatesPage() {
       ================================= */}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
             <FileText className="h-5 w-5" />
-
-            <h1 className="text-2xl font-bold tracking-tight">
-              Certificates
-            </h1>
           </div>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Manage certificate requests, approvals, and issuance.
-          </p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+              Certificates
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Manage certificate requests, approvals, and issuance.
+            </p>
+          </div>
         </div>
 
         <Button
@@ -614,6 +617,7 @@ export function CertificatesPage() {
               true
             )
           }
+          className="h-10 rounded-xl bg-emerald-700 px-4 font-medium text-white hover:bg-emerald-800"
         >
           <Plus className="mr-2 h-4 w-4" />
 
@@ -628,44 +632,80 @@ export function CertificatesPage() {
       <div className="grid gap-4 sm:grid-cols-3">
         {/* PENDING */}
 
-        <div className="rounded-lg border bg-background p-4">
-          <p className="text-sm text-muted-foreground">
-            Pending
-          </p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-slate-600">
+                Pending
+              </p>
 
-          <p className="mt-1 text-2xl font-bold">
-            {
-              pendingCount
-            }
-          </p>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
+                {
+                  pendingCount
+                }
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Awaiting review
+              </p>
+            </div>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
+              <FileText className="h-5 w-5" />
+            </div>
+          </div>
         </div>
 
         {/* APPROVED */}
 
-        <div className="rounded-lg border bg-background p-4">
-          <p className="text-sm text-muted-foreground">
-            Approved
-          </p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-slate-600">
+                Approved
+              </p>
 
-          <p className="mt-1 text-2xl font-bold">
-            {
-              approvedCount
-            }
-          </p>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
+                {
+                  approvedCount
+                }
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Ready for issuance
+              </p>
+            </div>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
+              <ShieldCheck className="h-5 w-5" />
+            </div>
+          </div>
         </div>
 
         {/* ISSUED */}
 
-        <div className="rounded-lg border bg-background p-4">
-          <p className="text-sm text-muted-foreground">
-            Issued
-          </p>
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="text-sm font-medium text-slate-600">
+                Issued
+              </p>
 
-          <p className="mt-1 text-2xl font-bold">
-            {
-              issuedCount
-            }
-          </p>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
+                {
+                  issuedCount
+                }
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Completed certificates
+              </p>
+            </div>
+
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+              <BadgeCheck className="h-5 w-5" />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -673,11 +713,17 @@ export function CertificatesPage() {
           FILTERS
       ================================= */}
 
-      <div className="grid gap-3 lg:grid-cols-4">
-        {/* SEARCH */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="mb-3 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <SlidersHorizontal className="h-4 w-4 text-emerald-700" />
+          Search & Filters
+        </div>
+
+        <div className="grid gap-3 lg:grid-cols-4">
+          {/* SEARCH */}
 
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
           <Input
             value={
@@ -693,7 +739,7 @@ export function CertificatesPage() {
               resetPage()
             }}
             placeholder="Search requests..."
-            className="pl-9"
+            className="h-10 rounded-xl border-slate-200 bg-white pl-9"
           />
         </div>
 
@@ -715,7 +761,7 @@ export function CertificatesPage() {
 
             resetPage()
           }}
-          className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="all">
             All statuses
@@ -760,7 +806,7 @@ export function CertificatesPage() {
 
             resetPage()
           }}
-          className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="all">
             All payments
@@ -794,7 +840,7 @@ export function CertificatesPage() {
 
             resetPage()
           }}
-          className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+          className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
         >
           <option value="all">
             All certificate types
@@ -819,14 +865,18 @@ export function CertificatesPage() {
             )
           )}
         </select>
-      </div>
+        </div>
+      </section>
 
       {/* =================================
           ERROR
       ================================= */}
 
       {error && (
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"
+        >
           Unable to load certificate requests.
         </div>
       )}
@@ -835,40 +885,63 @@ export function CertificatesPage() {
           TABLE
       ================================= */}
 
-      <div className="overflow-hidden rounded-md border">
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-2 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-semibold text-slate-950">
+              Certificate Requests
+            </h3>
+
+            <p className="mt-1 text-sm text-slate-500">
+              {totalRequests}{" "}
+              {totalRequests === 1
+                ? "request"
+                : "requests"}{" "}
+              found
+            </p>
+          </div>
+
+          {isFetching &&
+            !isLoading && (
+              <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                Updating...
+              </span>
+            )}
+        </div>
+
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>
+              <TableRow className="border-slate-200 bg-slate-50 hover:bg-slate-50">
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Request #
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Resident
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Certificate
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Purpose
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Payment
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Status
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Requested
                 </TableHead>
 
-                <TableHead className="text-right">
+                <TableHead className="text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Actions
                 </TableHead>
               </TableRow>
@@ -904,9 +977,21 @@ export function CertificatesPage() {
                       colSpan={
                         8
                       }
-                      className="h-24 text-center text-muted-foreground"
+                      className="h-40 text-center"
                     >
-                      No certificate requests found.
+                      <div className="mx-auto flex max-w-sm flex-col items-center">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                          <FileText className="h-5 w-5" />
+                        </div>
+
+                        <p className="mt-3 font-medium text-slate-800">
+                          No certificate requests found
+                        </p>
+
+                        <p className="mt-1 text-sm text-slate-500">
+                          Try changing the search or filter options.
+                        </p>
+                      </div>
                     </TableCell>
                   </TableRow>
                 )}
@@ -924,6 +1009,7 @@ export function CertificatesPage() {
                       key={
                         request.id
                       }
+                      className="border-slate-100 transition-colors hover:bg-slate-50/80"
                     >
                       {/* ===================
                           REQUEST NUMBER
@@ -931,14 +1017,14 @@ export function CertificatesPage() {
 
                       <TableCell>
                         <div>
-                          <p className="font-medium">
+                          <p className="font-medium text-slate-950">
                             {
                               request.request_number
                             }
                           </p>
 
                           {request.certificate_number && (
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-xs text-slate-500">
                               Cert:{" "}
                               {
                                 request.certificate_number
@@ -954,13 +1040,13 @@ export function CertificatesPage() {
 
                       <TableCell>
                         <div>
-                          <p className="font-medium">
+                          <p className="font-medium text-slate-950">
                             {getResidentName(
                               request
                             )}
                           </p>
 
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-slate-500">
                             {request
                               .residents
                               ?.resident_number ??
@@ -997,7 +1083,7 @@ export function CertificatesPage() {
                         </p>
 
                         {request.business_name && (
-                          <p className="mt-1 max-w-[220px] truncate text-xs text-muted-foreground">
+                          <p className="mt-1 max-w-[220px] truncate text-xs text-slate-500">
                             {
                               request.business_name
                             }
@@ -1013,7 +1099,7 @@ export function CertificatesPage() {
                         <div className="space-y-1">
                           <span
                             className={[
-                              "inline-flex rounded-full px-2 py-1 text-xs font-medium capitalize",
+                              "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize",
                               getPaymentClass(
                                 request.payment_status
                               ),
@@ -1026,7 +1112,7 @@ export function CertificatesPage() {
                             }
                           </span>
 
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-xs text-slate-500">
                             {formatAmount(
                               request.amount
                             )}
@@ -1041,7 +1127,7 @@ export function CertificatesPage() {
                       <TableCell>
                         <span
                           className={[
-                            "inline-flex rounded-full px-2 py-1 text-xs font-medium capitalize",
+                            "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize",
                             getStatusClass(
                               request.status
                             ),
@@ -1074,7 +1160,7 @@ export function CertificatesPage() {
                           REQUESTED
                       ==================== */}
 
-                      <TableCell className="whitespace-nowrap">
+                      <TableCell className="whitespace-nowrap text-slate-600">
                         {formatDateTime(
                           request.requested_at
                         )}
@@ -1099,8 +1185,9 @@ export function CertificatesPage() {
                                   request
                                 )
                               }
+                              className="rounded-lg border-slate-200 bg-white"
                             >
-                              <ShieldCheck className="mr-1 h-3.5 w-3.5" />
+                              <ShieldCheck className="mr-1.5 h-3.5 w-3.5" />
 
                               Review
                             </Button>
@@ -1118,8 +1205,9 @@ export function CertificatesPage() {
                                   request
                                 )
                               }
+                              className="rounded-lg bg-emerald-700 text-white hover:bg-emerald-800"
                             >
-                              <BadgeCheck className="mr-1 h-3.5 w-3.5" />
+                              <BadgeCheck className="mr-1.5 h-3.5 w-3.5" />
 
                               Issue
                             </Button>
@@ -1145,8 +1233,9 @@ export function CertificatesPage() {
                                   request
                                 )
                               }
+                              className="rounded-lg border-red-200 bg-white text-red-700 hover:bg-red-50 hover:text-red-800"
                             >
-                              <Ban className="mr-1 h-3.5 w-3.5" />
+                              <Ban className="mr-1.5 h-3.5 w-3.5" />
 
                               Cancel
                             </Button>
@@ -1169,8 +1258,9 @@ export function CertificatesPage() {
                                   request
                                 )
                               }
+                              className="rounded-lg border-slate-200 bg-white"
                             >
-                              <Download className="mr-1 h-3.5 w-3.5" />
+                              <Download className="mr-1.5 h-3.5 w-3.5" />
 
                               {generatingPdfId ===
                               request.id
@@ -1191,23 +1281,23 @@ export function CertificatesPage() {
             PAGINATION
         ================================= */}
 
-        <div className="flex flex-col gap-3 border-t p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-50/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500">
               Showing{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   startRecord
                 }
               </span>{" "}
               to{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   endRecord
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalRequests
                 }
@@ -1217,7 +1307,7 @@ export function CertificatesPage() {
 
             {isFetching &&
               !isLoading && (
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-xs text-slate-500">
                   Updating results...
                 </p>
               )}
@@ -1232,6 +1322,7 @@ export function CertificatesPage() {
                 page <= 1 ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -1250,15 +1341,15 @@ export function CertificatesPage() {
               Previous
             </Button>
 
-            <span className="px-2 text-sm text-muted-foreground">
+            <span className="min-w-[92px] text-center text-sm text-slate-500">
               Page{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   page
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalPages
                 }
@@ -1274,6 +1365,7 @@ export function CertificatesPage() {
                   totalPages ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -1293,7 +1385,7 @@ export function CertificatesPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* =================================
           CREATE REQUEST DIALOG

@@ -13,6 +13,7 @@ import {
   RotateCcw,
   Scale,
   Search,
+  SlidersHorizontal,
   ShieldAlert,
   Users,
   XCircle,
@@ -91,23 +92,23 @@ function SummaryCard({
   }>
 }) {
   return (
-    <div className="rounded-lg border bg-background p-5 shadow-sm">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-muted-foreground">
+          <p className="text-sm font-medium text-slate-600">
             {title}
           </p>
 
-          <p className="mt-2 text-3xl font-bold tracking-tight">
+          <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-slate-500">
             {description}
           </p>
         </div>
 
-        <div className="rounded-md bg-muted p-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -128,11 +129,11 @@ function ReportSectionHeader({
 }) {
   return (
     <div>
-      <h2 className="text-lg font-semibold">
+      <h2 className="text-lg font-semibold text-slate-950">
         {title}
       </h2>
 
-      <p className="mt-1 text-sm text-muted-foreground">
+      <p className="mt-1 text-sm text-slate-500">
         {description}
       </p>
     </div>
@@ -153,13 +154,13 @@ function ReportChartCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-lg border bg-background p-5 shadow-sm">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="mb-5">
-        <h3 className="font-semibold">
+        <h3 className="font-semibold text-slate-950">
           {title}
         </h3>
 
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-sm text-slate-500">
           {description}
         </p>
       </div>
@@ -408,15 +409,20 @@ export function ReportsPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Reports & Analytics
-          </h1>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <BarChart3 className="h-5 w-5" />
+          </div>
 
-          <p className="text-sm text-muted-foreground">
-            Loading report
-            statistics...
-          </p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+              Reports & Analytics
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Loading report statistics...
+            </p>
+          </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -431,7 +437,7 @@ export function ReportsPage() {
                 key={
                   index
                 }
-                className="h-32 animate-pulse rounded-lg border bg-muted"
+                className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-slate-100"
               />
             )
           )}
@@ -447,15 +453,23 @@ export function ReportsPage() {
   if (error) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <BarChart3 className="h-5 w-5" />
+          </div>
+
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
             Reports & Analytics
-          </h1>
+          </h2>
         </div>
 
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-          Unable to load report
-          statistics.
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+        >
+          <p className="font-medium">
+            Unable to load report statistics.
+          </p>
 
           {error instanceof
             Error && (
@@ -746,20 +760,20 @@ export function ReportsPage() {
           PAGE HEADER
       ==================================== */}
 
-      <div>
-        <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
           <BarChart3 className="h-5 w-5" />
-
-          <h1 className="text-2xl font-bold tracking-tight">
-            Reports & Analytics
-          </h1>
         </div>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          Barangay population,
-          certificates, and Peace &
-          Order reporting overview.
-        </p>
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+            Reports & Analytics
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Barangay population, certificates, and Peace & Order reporting overview.
+          </p>
+        </div>
       </div>
 
       {/* ====================================
@@ -1021,13 +1035,13 @@ export function ReportsPage() {
             CASE STATUS BREAKDOWN
         ==================================== */}
 
-        <div className="rounded-lg border bg-background">
-          <div className="border-b p-5">
-            <h3 className="font-semibold">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="border-b border-slate-200 p-5">
+            <h3 className="font-semibold text-slate-950">
               Case Status Breakdown
             </h3>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-slate-500">
               Detailed Peace &
               Order case status
               distribution.
@@ -1035,12 +1049,12 @@ export function ReportsPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Open
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter?.open ??
                   0
@@ -1048,12 +1062,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Under Mediation
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.under_mediation ??
@@ -1062,12 +1076,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Settled
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.settled ??
@@ -1076,12 +1090,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Referred
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.referred ??
@@ -1090,12 +1104,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Dismissed
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.dismissed ??
@@ -1105,11 +1119,11 @@ export function ReportsPage() {
             </div>
 
             <div className="p-5">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-slate-500">
                 Closed
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.closed ??
@@ -1124,25 +1138,25 @@ export function ReportsPage() {
             PRIORITY BREAKDOWN
         ==================================== */}
 
-        <div className="rounded-lg border bg-background">
-          <div className="border-b p-5">
-            <h3 className="font-semibold">
+        <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="border-b border-slate-200 p-5">
+            <h3 className="font-semibold text-slate-950">
               Priority Breakdown
             </h3>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-slate-500">
               Blotter cases grouped
               by recorded priority.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 xl:grid-cols-4">
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Low
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter?.low ??
                   0
@@ -1150,12 +1164,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 Normal
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.normal ??
@@ -1164,12 +1178,12 @@ export function ReportsPage() {
               </p>
             </div>
 
-            <div className="border-b p-5 xl:border-b-0 xl:border-r">
-              <p className="text-xs text-muted-foreground">
+            <div className="border-b border-slate-200 p-5 xl:border-b-0 xl:border-r">
+              <p className="text-xs text-slate-500">
                 High
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter?.high ??
                   0
@@ -1178,11 +1192,11 @@ export function ReportsPage() {
             </div>
 
             <div className="p-5">
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-slate-500">
                 Urgent
               </p>
 
-              <p className="mt-2 text-2xl font-bold">
+              <p className="mt-2 text-2xl font-bold text-slate-950">
                 {
                   blotter
                     ?.urgent ??
@@ -1319,7 +1333,12 @@ export function ReportsPage() {
           description="Filter certificate requests and Peace & Order records by date."
         />
 
-        <div className="rounded-lg border bg-background p-5 shadow-sm">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mb-4 flex items-center gap-2 text-sm font-medium text-slate-700">
+            <SlidersHorizontal className="h-4 w-4 text-emerald-700" />
+            Date Range Filter
+          </div>
+
           <div className="grid gap-4 lg:grid-cols-[1fr_1fr_auto] lg:items-end">
             {/* START DATE */}
 
@@ -1342,6 +1361,7 @@ export function ReportsPage() {
                       .value
                   )
                 }
+                className="h-10 rounded-xl border-slate-200 bg-white"
               />
             </div>
 
@@ -1366,6 +1386,7 @@ export function ReportsPage() {
                       .value
                   )
                 }
+                className="h-10 rounded-xl border-slate-200 bg-white"
               />
             </div>
 
@@ -1377,6 +1398,7 @@ export function ReportsPage() {
                 onClick={
                   handleApplyFilters
                 }
+                className="h-10 rounded-xl bg-emerald-700 px-4 text-white hover:bg-emerald-800"
               >
                 <Search className="mr-2 h-4 w-4" />
 
@@ -1389,6 +1411,7 @@ export function ReportsPage() {
                 onClick={
                   handleClearFilters
                 }
+                className="h-10 rounded-xl border-slate-200 bg-white"
               >
                 <RotateCcw className="mr-2 h-4 w-4" />
 
@@ -1400,7 +1423,7 @@ export function ReportsPage() {
           {/* FILTER ERROR */}
 
           {filterError && (
-            <div className="mt-4 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+            <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
               {
                 filterError
               }
@@ -1409,12 +1432,12 @@ export function ReportsPage() {
 
           {/* FILTER DESCRIPTION */}
 
-          <div className="mt-4 text-xs text-muted-foreground">
+          <div className="mt-4 text-xs text-slate-500">
             {hasDateFilter ? (
               <p>
                 Showing records from{" "}
 
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-slate-800">
                   {appliedFilters.startDate
                     ? formatDate(
                         appliedFilters.startDate
@@ -1424,7 +1447,7 @@ export function ReportsPage() {
 
                 {" "}through{" "}
 
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-slate-800">
                   {appliedFilters.endDate
                     ? formatDate(
                         appliedFilters.endDate
@@ -1449,7 +1472,7 @@ export function ReportsPage() {
       ==================================== */}
 
       {detailedError && (
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           Unable to load detailed
           report data.
 
@@ -1470,9 +1493,9 @@ export function ReportsPage() {
 
       {detailedLoading && (
         <div className="space-y-4">
-          <div className="h-64 animate-pulse rounded-lg border bg-muted" />
+          <div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
 
-          <div className="h-64 animate-pulse rounded-lg border bg-muted" />
+          <div className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
         </div>
       )}
 
@@ -1487,15 +1510,15 @@ export function ReportsPage() {
                 CERTIFICATE TABLE
             ==================================== */}
 
-            <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
-              <div className="flex flex-col gap-2 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
+            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="flex flex-col gap-2 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="font-semibold">
+                  <h2 className="font-semibold text-slate-950">
                     Certificate Request
                     Report
                   </h2>
 
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-slate-500">
                     Certificate
                     requests matching
                     the selected date
@@ -1503,7 +1526,7 @@ export function ReportsPage() {
                   </p>
                 </div>
 
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium text-slate-700">
                   {
                     certificateRows.length
                   }{" "}
@@ -1517,7 +1540,7 @@ export function ReportsPage() {
 
               {certificateRows.length ===
               0 ? (
-                <div className="p-10 text-center text-sm text-muted-foreground">
+                <div className="p-10 text-center text-sm text-slate-500">
                   No certificate
                   requests found for
                   this date range.
@@ -1525,17 +1548,17 @@ export function ReportsPage() {
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="border-b bg-muted/30">
+                    <thead className="border-b border-slate-200 bg-slate-50">
                       <tr>
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Request #
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Date
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Status
                         </th>
                       </tr>
@@ -1550,15 +1573,15 @@ export function ReportsPage() {
                             key={
                               item.id
                             }
-                            className="border-b last:border-b-0"
+                            className="border-b border-slate-100 transition-colors last:border-b-0 hover:bg-slate-50/80"
                           >
-                            <td className="whitespace-nowrap px-4 py-3 font-medium">
+                            <td className="whitespace-nowrap px-4 py-3 font-medium text-slate-950">
                               {
                                 item.request_number
                               }
                             </td>
 
-                            <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
+                            <td className="whitespace-nowrap px-4 py-3 text-slate-500">
                               {formatDate(
                                 item.created_at
                               )}
@@ -1567,7 +1590,7 @@ export function ReportsPage() {
                             <td className="px-4 py-3">
                               <span
                                 className={[
-                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-medium",
+                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
                                   getCertificateStatusClass(
                                     item.status
                                   ),
@@ -1593,15 +1616,15 @@ export function ReportsPage() {
                 BLOTTER TABLE
             ==================================== */}
 
-            <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
-              <div className="flex flex-col gap-2 border-b p-5 sm:flex-row sm:items-center sm:justify-between">
+            <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <div className="flex flex-col gap-2 border-b border-slate-200 p-5 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <h2 className="font-semibold">
+                  <h2 className="font-semibold text-slate-950">
                     Peace & Order Case
                     Report
                   </h2>
 
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-slate-500">
                     Blotter cases
                     matching the
                     selected incident
@@ -1609,7 +1632,7 @@ export function ReportsPage() {
                   </p>
                 </div>
 
-                <span className="text-sm font-medium">
+                <span className="text-sm font-medium text-slate-700">
                   {
                     blotterRows.length
                   }{" "}
@@ -1623,7 +1646,7 @@ export function ReportsPage() {
 
               {blotterRows.length ===
               0 ? (
-                <div className="p-10 text-center text-sm text-muted-foreground">
+                <div className="p-10 text-center text-sm text-slate-500">
                   No Peace & Order
                   cases found for this
                   date range.
@@ -1631,25 +1654,25 @@ export function ReportsPage() {
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
-                    <thead className="border-b bg-muted/30">
+                    <thead className="border-b border-slate-200 bg-slate-50">
                       <tr>
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Case #
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Complaint
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Incident Date
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Priority
                         </th>
 
-                        <th className="px-4 py-3 text-left font-medium">
+                        <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                           Status
                         </th>
                       </tr>
@@ -1664,9 +1687,9 @@ export function ReportsPage() {
                             key={
                               item.id
                             }
-                            className="border-b last:border-b-0"
+                            className="border-b border-slate-100 transition-colors last:border-b-0 hover:bg-slate-50/80"
                           >
-                            <td className="whitespace-nowrap px-4 py-3 font-medium">
+                            <td className="whitespace-nowrap px-4 py-3 font-medium text-slate-950">
                               {
                                 item.case_number
                               }
@@ -1678,7 +1701,7 @@ export function ReportsPage() {
                               }
                             </td>
 
-                            <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
+                            <td className="whitespace-nowrap px-4 py-3 text-slate-500">
                               {formatDate(
                                 item.incident_date
                               )}
@@ -1687,7 +1710,7 @@ export function ReportsPage() {
                             <td className="px-4 py-3">
                               <span
                                 className={[
-                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-medium",
+                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
                                   getPriorityClass(
                                     item.priority
                                   ),
@@ -1704,7 +1727,7 @@ export function ReportsPage() {
                             <td className="px-4 py-3">
                               <span
                                 className={[
-                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-medium",
+                                  "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
                                   getBlotterStatusClass(
                                     item.status
                                   ),
@@ -1732,19 +1755,19 @@ export function ReportsPage() {
           REPORT EXPORT
       ==================================== */}
 
-      <section className="rounded-lg border bg-background p-6 shadow-sm">
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-semibold">
+            <h2 className="font-semibold text-slate-950">
               Report Export
             </h2>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm text-slate-500">
               Export the currently
               filtered report data.
             </p>
 
-            <p className="mt-1 text-xs text-muted-foreground">
+            <p className="mt-1 text-xs text-slate-500">
               Excel and PDF exports
               use the currently
               applied date range.
@@ -1767,6 +1790,7 @@ export function ReportsPage() {
                   detailedError
                 )
               }
+              className="rounded-xl bg-emerald-700 text-white hover:bg-emerald-800"
             >
               <Download className="mr-2 h-4 w-4" />
 
@@ -1791,6 +1815,7 @@ export function ReportsPage() {
                   detailedError
                 )
               }
+              className="rounded-xl border-slate-200 bg-white"
             >
               <FileDown className="mr-2 h-4 w-4" />
 

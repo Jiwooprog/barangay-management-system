@@ -68,23 +68,23 @@ function StatCard({
   }>
 }) {
   return (
-    <div className="rounded-xl border bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          <p className="text-sm font-semibold text-foreground">
+          <p className="text-sm font-medium text-slate-600">
             {title}
           </p>
 
-          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground">
+          <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
             {value}
           </p>
 
-          <p className="mt-1 text-xs leading-5 text-muted-foreground">
+          <p className="mt-1 text-xs leading-5 text-slate-500">
             {description}
           </p>
         </div>
 
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -106,19 +106,21 @@ function ChartCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-xl border bg-background p-5 shadow-sm">
-      <div className="mb-5">
-        <h2 className="font-semibold text-foreground">
+    <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 px-5 py-4">
+        <h3 className="font-semibold text-slate-950">
           {title}
-        </h2>
+        </h3>
 
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-sm text-slate-500">
           {description}
         </p>
       </div>
 
-      {children}
-    </div>
+      <div className="p-5">
+        {children}
+      </div>
+    </section>
   )
 }
 
@@ -278,7 +280,7 @@ export function DashboardPage() {
                 key={
                   index
                 }
-                className="h-32 animate-pulse rounded-lg border bg-muted"
+                className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm"
               />
             )
           )}
@@ -296,7 +298,7 @@ export function DashboardPage() {
                 key={
                   index
                 }
-                className="h-80 animate-pulse rounded-lg border bg-muted"
+                className="h-80 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm"
               />
             )
           )}
@@ -321,7 +323,7 @@ export function DashboardPage() {
           </h1>
         </div>
 
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
           Unable to load dashboard
           statistics.
         </div>
@@ -330,23 +332,23 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* ====================================
           PAGE HEADER
       ==================================== */}
 
-      <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-700 text-white shadow-sm">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
           <BarChart3 className="h-5 w-5" />
         </div>
 
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
             Dashboard
-          </h1>
+          </h2>
 
-          <p className="mt-1 max-w-3xl text-sm leading-6 text-muted-foreground">
-            Barangay population, household, certificates, demographics, and Peace & Order overview.
+          <p className="mt-1 text-sm text-slate-500">
+            Barangay population, households, certificates, demographics, and Peace & Order overview.
           </p>
         </div>
       </div>
@@ -402,19 +404,19 @@ export function DashboardPage() {
           ACTIVE POPULATION
       ==================================== */}
 
-      <div className="rounded-xl border bg-background p-5 shadow-sm sm:p-6">
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-700 text-white">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
               <Users className="h-5 w-5" />
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 Active Population
               </p>
 
-              <p className="mt-1 text-3xl font-bold tracking-tight text-foreground">
+              <p className="mt-1 text-3xl font-bold tracking-tight text-slate-950">
                 {analytics
                   ?.totalActiveResidents ??
                   0}
@@ -422,28 +424,28 @@ export function DashboardPage() {
             </div>
           </div>
 
-          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+          <p className="max-w-md text-sm leading-6 text-slate-500">
             Residents currently marked active with an active residency status.
           </p>
         </div>
-      </div>
+      </section>
 
       {/* ====================================
           PEACE & ORDER
       ==================================== */}
 
       <section className="space-y-4">
-        <div className="flex items-start gap-3 border-b pb-4">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-white">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
             <ShieldAlert className="h-5 w-5" />
           </div>
 
           <div>
-            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+            <h2 className="text-xl font-semibold tracking-tight text-slate-950">
               Peace & Order
             </h2>
 
-            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            <p className="mt-1 text-sm text-slate-500">
               Current blotter case workload, mediation, and resolution activity.
             </p>
           </div>
@@ -452,7 +454,7 @@ export function DashboardPage() {
         {/* BLOTTER ERROR */}
 
         {blotterError && (
-          <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
             Unable to load Peace &
             Order statistics.
 
@@ -482,7 +484,7 @@ export function DashboardPage() {
                   key={
                     index
                   }
-                  className="h-32 animate-pulse rounded-lg border bg-muted"
+                  className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-white shadow-sm"
                 />
               )
             )}
@@ -549,51 +551,49 @@ export function DashboardPage() {
               {/* PRIORITY SUMMARY */}
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-lg border bg-background p-5 shadow-sm">
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="text-sm font-medium text-slate-600">
                     Urgent Cases
                   </p>
 
-                  <p className="mt-2 text-3xl font-bold tracking-tight">
+                  <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                     {blotterStats
                       ?.urgent ??
                       0}
                   </p>
 
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Cases marked
-                    urgent priority
+                  <p className="mt-1 text-xs text-slate-500">
+                    Cases marked urgent priority
                   </p>
                 </div>
 
-                <div className="rounded-lg border bg-background p-5 shadow-sm">
-                  <p className="text-sm font-medium text-muted-foreground">
+                <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                  <p className="text-sm font-medium text-slate-600">
                     High Priority
                   </p>
 
-                  <p className="mt-2 text-3xl font-bold tracking-tight">
+                  <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                     {blotterStats
                       ?.high_priority ??
                       0}
                   </p>
 
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Cases marked high
-                    priority
+                  <p className="mt-1 text-xs text-slate-500">
+                    Cases marked high priority
                   </p>
                 </div>
               </div>
 
               {/* RECENT CASES */}
 
-              <div className="overflow-hidden rounded-lg border bg-background shadow-sm">
-                <div className="border-b p-5">
-                  <h3 className="font-semibold">
+              <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-200 px-5 py-4">
+                  <h3 className="font-semibold text-slate-950">
                     Recent Blotter
                     Cases
                   </h3>
 
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1 text-sm text-slate-500">
                     Most recently
                     recorded Peace &
                     Order cases.
@@ -606,33 +606,33 @@ export function DashboardPage() {
                   []
                 ).length ===
                 0 ? (
-                  <div className="p-8 text-center text-sm text-muted-foreground">
+                  <div className="p-8 text-center text-sm text-slate-500">
                     No blotter cases
                     recorded.
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
-                      <thead className="border-b bg-muted/30">
+                      <thead className="border-b border-slate-200 bg-slate-50">
                         <tr>
-                          <th className="px-4 py-3 text-left font-medium">
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                             Case #
                           </th>
 
-                          <th className="px-4 py-3 text-left font-medium">
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                             Complaint
                           </th>
 
-                          <th className="px-4 py-3 text-left font-medium">
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                             Incident
                             Date
                           </th>
 
-                          <th className="px-4 py-3 text-left font-medium">
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                             Priority
                           </th>
 
-                          <th className="px-4 py-3 text-left font-medium">
+                          <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
                             Status
                           </th>
                         </tr>
@@ -651,7 +651,7 @@ export function DashboardPage() {
                               key={
                                 item.id
                               }
-                              className="border-b last:border-b-0"
+                              className="border-b border-slate-100 last:border-b-0 hover:bg-slate-50/80"
                             >
                               <td className="whitespace-nowrap px-4 py-3 font-medium">
                                 {
@@ -665,7 +665,7 @@ export function DashboardPage() {
                                 }
                               </td>
 
-                              <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
+                              <td className="whitespace-nowrap px-4 py-3 text-slate-600">
                                 {formatDate(
                                   item.incident_date
                                 )}
@@ -712,14 +712,35 @@ export function DashboardPage() {
                   </div>
                 )}
 
-                <div className="border-t bg-muted/20 px-5 py-3 text-xs text-muted-foreground">
+                <div className="border-t border-slate-200 bg-slate-50/60 px-5 py-3 text-xs text-slate-500">
                   Showing up to 5
                   recent cases.
                 </div>
-              </div>
+              </section>
             </>
           )}
       </section>
+
+      {/* ====================================
+          POPULATION ANALYTICS
+      ==================================== */}
+
+      <section className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <BarChart3 className="h-5 w-5" />
+          </div>
+
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight text-slate-950">
+              Population Analytics
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Resident demographic and purok distribution overview.
+            </p>
+          </div>
+        </div>
 
       {/* ====================================
           CHART ROW 1
@@ -904,7 +925,7 @@ export function DashboardPage() {
                 <Bar
                   dataKey="value"
                   name="Residents"
-                  fill="#2563eb"
+                  fill="#047857"
                   radius={[
                     6,
                     6,
@@ -1033,6 +1054,7 @@ export function DashboardPage() {
           </ResponsiveContainer>
         </div>
       </ChartCard>
+      </section>
     </div>
   )
 }

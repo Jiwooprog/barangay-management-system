@@ -10,9 +10,11 @@ import {
   House,
   Plus,
   Search,
+  SlidersHorizontal,
+  UserRoundCheck,
+  UserRoundX,
 } from "lucide-react"
 
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
@@ -315,24 +317,6 @@ export function HouseholdsPage() {
     }
 
   // ========================================
-  // ERROR
-  // ========================================
-
-  if (error) {
-    return (
-      <div className="space-y-4">
-        <h1 className="text-2xl font-bold">
-          Household Management
-        </h1>
-
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-          Unable to load households.
-        </div>
-      </div>
-    )
-  }
-
-  // ========================================
   // RENDER
   // ========================================
 
@@ -341,25 +325,28 @@ export function HouseholdsPage() {
       {/* HEADER */}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <House className="h-6 w-6" />
-
-            <h1 className="text-2xl font-bold tracking-tight">
-              Household Management
-            </h1>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <House className="h-5 w-5" />
           </div>
 
-          <p className="mt-1 text-muted-foreground">
-            Manage barangay households
-            and household members.
-          </p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+              Household Management
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Manage barangay households and household members.
+            </p>
+          </div>
         </div>
 
         <Button
+          type="button"
           onClick={
             handleAdd
           }
+          className="h-10 rounded-xl bg-emerald-700 px-4 font-medium text-white hover:bg-emerald-800"
         >
           <Plus className="mr-2 h-4 w-4" />
 
@@ -369,93 +356,132 @@ export function HouseholdsPage() {
 
       {/* FILTERS */}
 
-      <div className="grid gap-3 md:grid-cols-[1fr_200px]">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="mb-3 flex items-center gap-2 text-sm font-medium text-slate-700">
+          <SlidersHorizontal className="h-4 w-4 text-emerald-700" />
+          Search & Filters
+        </div>
 
-          <Input
-            className="pl-9"
-            placeholder="Search households..."
+        <div className="grid gap-3 md:grid-cols-[1fr_220px]">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+
+            <Input
+              className="h-10 rounded-xl border-slate-200 bg-white pl-9"
+              placeholder="Search households..."
+              value={
+                search
+              }
+              onChange={(
+                event
+              ) => {
+                setSearch(
+                  event.target.value
+                )
+
+                resetPage()
+              }}
+            />
+          </div>
+
+          <select
             value={
-              search
+              statusFilter
             }
             onChange={(
               event
             ) => {
-              setSearch(
-                event.target.value
+              setStatusFilter(
+                event.target
+                  .value as
+                  | "all"
+                  | "active"
+                  | "inactive"
               )
 
               resetPage()
             }}
-          />
+            className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+          >
+            <option value="all">
+              All statuses
+            </option>
+
+            <option value="active">
+              Active
+            </option>
+
+            <option value="inactive">
+              Inactive
+            </option>
+          </select>
         </div>
+      </section>
 
-        <select
-          value={
-            statusFilter
-          }
-          onChange={(
-            event
-          ) => {
-            setStatusFilter(
-              event.target
-                .value as
-                | "all"
-                | "active"
-                | "inactive"
-            )
-
-            resetPage()
-          }}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+      {error && (
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700"
         >
-          <option value="all">
-            All statuses
-          </option>
-
-          <option value="active">
-            Active
-          </option>
-
-          <option value="inactive">
-            Inactive
-          </option>
-        </select>
-      </div>
+          Unable to load households.
+        </div>
+      )}
 
       {/* TABLE */}
 
-      <div className="overflow-hidden rounded-lg border bg-background">
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-2 border-b border-slate-200 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h3 className="font-semibold text-slate-950">
+              Households
+            </h3>
+
+            <p className="mt-1 text-sm text-slate-500">
+              {totalHouseholds}{" "}
+              {totalHouseholds === 1
+                ? "household"
+                : "households"}{" "}
+              found
+            </p>
+          </div>
+
+          {isFetching &&
+            !isLoading && (
+              <span className="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700">
+                Updating...
+              </span>
+            )}
+        </div>
+
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>
+              <TableRow className="border-slate-200 bg-slate-50 hover:bg-slate-50">
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Household #
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Purok
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Address
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Household Head
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Housing
                 </TableHead>
 
-                <TableHead>
+                <TableHead className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Status
                 </TableHead>
 
-                <TableHead className="text-right">
+                <TableHead className="text-right text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Actions
                 </TableHead>
               </TableRow>
@@ -468,7 +494,7 @@ export function HouseholdsPage() {
                     colSpan={
                       7
                     }
-                    className="h-24 text-center text-muted-foreground"
+                    className="h-32 text-center text-sm text-slate-500"
                   >
                     Loading households...
                   </TableCell>
@@ -480,9 +506,21 @@ export function HouseholdsPage() {
                     colSpan={
                       7
                     }
-                    className="h-24 text-center text-muted-foreground"
+                    className="h-40 text-center"
                   >
-                    No households found.
+                    <div className="mx-auto flex max-w-sm flex-col items-center">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                        <House className="h-5 w-5" />
+                      </div>
+
+                      <p className="mt-3 font-medium text-slate-800">
+                        No households found
+                      </p>
+
+                      <p className="mt-1 text-sm text-slate-500">
+                        Try changing the search or status filter.
+                      </p>
+                    </div>
                   </TableCell>
                 </TableRow>
               ) : (
@@ -494,52 +532,70 @@ export function HouseholdsPage() {
                       key={
                         household.id
                       }
+                      className="border-slate-100 transition-colors hover:bg-slate-50/80"
                     >
-                      <TableCell className="font-medium">
+                      <TableCell className="whitespace-nowrap font-medium text-slate-700">
                         {
                           household.household_number
                         }
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="whitespace-nowrap text-slate-600">
                         {household
                           .puroks
                           ?.name ??
                           "—"}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="min-w-[180px] text-slate-600">
                         {getAddress(
                           household
                         )}
                       </TableCell>
 
-                      <TableCell>
+                      <TableCell className="min-w-[180px] font-medium text-slate-800">
                         {getHouseholdHeadName(
                           household
                         )}
                       </TableCell>
 
-                      <TableCell className="capitalize">
+                      <TableCell className="capitalize text-slate-600">
                         {household.housing_status ??
                           "—"}
                       </TableCell>
 
                       <TableCell>
-                        {household.is_active ? (
-                          <Badge>
-                            Active
-                          </Badge>
-                        ) : (
-                          <Badge variant="secondary">
-                            Inactive
-                          </Badge>
-                        )}
+                        <span
+                          className={[
+                            "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+                            household.is_active
+                              ? "bg-emerald-50 text-emerald-700"
+                              : "bg-slate-100 text-slate-600",
+                          ].join(
+                            " "
+                          )}
+                        >
+                          <span
+                            className={[
+                              "h-1.5 w-1.5 rounded-full",
+                              household.is_active
+                                ? "bg-emerald-500"
+                                : "bg-slate-400",
+                            ].join(
+                              " "
+                            )}
+                          />
+
+                          {household.is_active
+                            ? "Active"
+                            : "Inactive"}
+                        </span>
                       </TableCell>
 
                       <TableCell>
                         <div className="flex justify-end gap-2">
                           <Button
+                            type="button"
                             variant="outline"
                             size="sm"
                             onClick={() =>
@@ -547,18 +603,16 @@ export function HouseholdsPage() {
                                 household
                               )
                             }
+                            className="rounded-lg border-slate-200 bg-white"
                           >
-                            <Edit className="mr-2 h-4 w-4" />
+                            <Edit className="mr-1.5 h-3.5 w-3.5" />
 
                             Edit
                           </Button>
 
                           <Button
-                            variant={
-                              household.is_active
-                                ? "outline"
-                                : "default"
-                            }
+                            type="button"
+                            variant="outline"
                             size="sm"
                             disabled={
                               statusMutation.isPending
@@ -568,7 +622,18 @@ export function HouseholdsPage() {
                                 household
                               )
                             }
+                            className={
+                              household.is_active
+                                ? "rounded-lg border-red-200 bg-white text-red-700 hover:bg-red-50 hover:text-red-800"
+                                : "rounded-lg border-emerald-200 bg-white text-emerald-700 hover:bg-emerald-50 hover:text-emerald-800"
+                            }
                           >
+                            {household.is_active ? (
+                              <UserRoundX className="mr-1.5 h-3.5 w-3.5" />
+                            ) : (
+                              <UserRoundCheck className="mr-1.5 h-3.5 w-3.5" />
+                            )}
+
                             {household.is_active
                               ? "Deactivate"
                               : "Activate"}
@@ -585,23 +650,23 @@ export function HouseholdsPage() {
 
         {/* PAGINATION */}
 
-        <div className="flex flex-col gap-3 border-t p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-50/60 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-500">
               Showing{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   startRecord
                 }
               </span>{" "}
               to{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   endRecord
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalHouseholds
                 }
@@ -611,7 +676,7 @@ export function HouseholdsPage() {
 
             {isFetching &&
               !isLoading && (
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-xs text-slate-500">
                   Updating results...
                 </p>
               )}
@@ -627,6 +692,7 @@ export function HouseholdsPage() {
                   1 ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -645,15 +711,15 @@ export function HouseholdsPage() {
               Previous
             </Button>
 
-            <span className="px-2 text-sm text-muted-foreground">
+            <span className="min-w-[92px] text-center text-sm text-slate-500">
               Page{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   page
                 }
               </span>{" "}
               of{" "}
-              <span className="font-medium text-foreground">
+              <span className="font-medium text-slate-800">
                 {
                   totalPages
                 }
@@ -669,6 +735,7 @@ export function HouseholdsPage() {
                   totalPages ||
                 isFetching
               }
+              className="rounded-lg border-slate-200 bg-white"
               onClick={() =>
                 setPage(
                   (
@@ -688,7 +755,7 @@ export function HouseholdsPage() {
             </Button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* FORM DIALOG */}
 

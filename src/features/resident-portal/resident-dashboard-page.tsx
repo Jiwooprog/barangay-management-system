@@ -74,22 +74,22 @@ function getStatusClass(
 ) {
   switch (status) {
     case "pending":
-      return "bg-amber-100 text-amber-800"
+      return "bg-amber-50 text-amber-700"
 
     case "approved":
-      return "bg-blue-100 text-blue-800"
+      return "bg-blue-50 text-blue-700"
 
     case "issued":
-      return "bg-green-100 text-green-800"
+      return "bg-emerald-50 text-emerald-700"
 
     case "rejected":
-      return "bg-red-100 text-red-800"
+      return "bg-red-50 text-red-700"
 
     case "cancelled":
-      return "bg-muted text-muted-foreground"
+      return "bg-slate-100 text-slate-600"
 
     default:
-      return "bg-muted text-muted-foreground"
+      return "bg-slate-100 text-slate-600"
   }
 }
 
@@ -112,11 +112,13 @@ export function ResidentPortalDashboardPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <div className="h-8 w-64 animate-pulse rounded bg-muted" />
+        <div className="space-y-2">
+          <div className="h-8 w-64 animate-pulse rounded-lg bg-slate-200" />
 
-          <div className="mt-2 h-4 w-80 animate-pulse rounded bg-muted" />
+          <div className="h-4 w-80 max-w-full animate-pulse rounded bg-slate-100" />
         </div>
+
+        <div className="h-36 animate-pulse rounded-2xl border border-slate-200 bg-white" />
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {Array.from({
@@ -125,16 +127,16 @@ export function ResidentPortalDashboardPage() {
             (_, index) => (
               <div
                 key={index}
-                className="h-28 animate-pulse rounded-lg border bg-muted/50"
+                className="h-32 animate-pulse rounded-2xl border border-slate-200 bg-white"
               />
             )
           )}
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="h-72 animate-pulse rounded-lg border bg-muted/50" />
+          <div className="h-72 animate-pulse rounded-2xl border border-slate-200 bg-white" />
 
-          <div className="h-72 animate-pulse rounded-lg border bg-muted/50" />
+          <div className="h-72 animate-pulse rounded-2xl border border-slate-200 bg-white" />
         </div>
       </div>
     )
@@ -149,19 +151,20 @@ export function ResidentPortalDashboardPage() {
     !data
   ) {
     return (
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6">
-        <h2 className="font-semibold text-destructive">
+      <div
+        role="alert"
+        className="rounded-2xl border border-red-200 bg-red-50 p-6"
+      >
+        <h2 className="font-semibold text-red-800">
           Unable to load Resident Portal
         </h2>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Make sure this login
-          account is linked to a
-          resident record.
+        <p className="mt-2 text-sm text-red-700/80">
+          Make sure this login account is linked to a resident record.
         </p>
 
         {error instanceof Error && (
-          <p className="mt-2 text-xs text-destructive">
+          <p className="mt-2 text-xs text-red-700">
             {error.message}
           </p>
         )}
@@ -197,75 +200,88 @@ export function ResidentPortalDashboardPage() {
       ================================= */}
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-sm text-muted-foreground">
-            Welcome back
-          </p>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <User className="h-5 w-5" />
+          </div>
 
-          <h1 className="text-2xl font-bold tracking-tight">
-            {fullName}
-          </h1>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+              Welcome back
+            </p>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            View your barangay
-            information and
-            certificate requests.
-          </p>
+            <h2 className="mt-0.5 text-2xl font-semibold tracking-tight text-slate-950">
+              {fullName}
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              View your barangay information and certificate requests.
+            </p>
+          </div>
         </div>
 
-      <Button
-           variant="outline"
-           className="w-fit"
-           render={
-    <Link to="/resident/profile" />
-       } >
+        <Button
+          variant="outline"
+          className="h-10 w-fit rounded-xl border-slate-200 bg-white"
+          render={
+            <Link to="/resident/profile" />
+          }
+        >
           <User className="mr-2 h-4 w-4" />
-           View My Profile
-      </Button>
 
+          View My Profile
+        </Button>
       </div>
 
       {/* =================================
           RESIDENT INFORMATION
       ================================= */}
 
-      <section className="rounded-lg border bg-background p-5">
-        <div className="flex items-center gap-2">
-          <User className="h-5 w-5" />
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <User className="h-4 w-4" />
+          </div>
 
-          <h2 className="font-semibold">
-            Resident Information
-          </h2>
+          <div>
+            <h3 className="font-semibold text-slate-950">
+              Resident Information
+            </h3>
+
+            <p className="mt-0.5 text-xs text-slate-500">
+              Your registered barangay record at a glance.
+            </p>
+          </div>
         </div>
 
-        <div className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 p-5 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Resident Number
             </p>
 
-            <p className="mt-1 font-semibold">
+            <p className="mt-1.5 font-semibold text-slate-950">
               {profile.resident_number}
             </p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Purok
             </p>
 
-            <p className="mt-1 font-semibold">
+            <p className="mt-1.5 font-semibold text-slate-950">
               {profile.puroks?.name ??
                 "Not assigned"}
             </p>
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Household
             </p>
 
-            <p className="mt-1 font-semibold">
+            <p className="mt-1.5 font-semibold text-slate-950">
               {profile.households
                 ?.household_number ??
                 "Not assigned"}
@@ -273,15 +289,15 @@ export function ResidentPortalDashboardPage() {
           </div>
 
           <div>
-            <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
               Residency Status
             </p>
 
-            <p className="mt-1 font-semibold capitalize">
+            <span className="mt-1.5 inline-flex rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold capitalize text-emerald-700">
               {
                 profile.residency_status
               }
-            </p>
+            </span>
           </div>
         </div>
       </section>
@@ -293,21 +309,25 @@ export function ResidentPortalDashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* TOTAL REQUESTS */}
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-start justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 Certificate Requests
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {
                   totalCertificateRequests
                 }
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                All submitted requests
+              </p>
             </div>
 
-            <div className="rounded-md bg-muted p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
               <FileText className="h-5 w-5" />
             </div>
           </div>
@@ -315,21 +335,25 @@ export function ResidentPortalDashboardPage() {
 
         {/* PENDING */}
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-start justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 Pending
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {
                   pendingCertificateRequests
                 }
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Awaiting barangay review
+              </p>
             </div>
 
-            <div className="rounded-md bg-muted p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-700">
               <Clock3 className="h-5 w-5" />
             </div>
           </div>
@@ -337,21 +361,25 @@ export function ResidentPortalDashboardPage() {
 
         {/* ISSUED */}
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-start justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 Issued
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {
                   issuedCertificateRequests
                 }
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Completed certificates
+              </p>
             </div>
 
-            <div className="rounded-md bg-muted p-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
               <CheckCircle2 className="h-5 w-5" />
             </div>
           </div>
@@ -359,21 +387,25 @@ export function ResidentPortalDashboardPage() {
 
         {/* PUROK */}
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="text-sm text-muted-foreground">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-slate-600">
                 My Purok
               </p>
 
-              <p className="mt-2 text-lg font-bold">
+              <p className="mt-2 truncate text-lg font-bold text-slate-950">
                 {profile.puroks
                   ?.name ??
                   "Unassigned"}
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Registered area
+              </p>
             </div>
 
-            <div className="rounded-md bg-muted p-2">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
               <MapPinned className="h-5 w-5" />
             </div>
           </div>
@@ -389,42 +421,40 @@ export function ResidentPortalDashboardPage() {
             RECENT CERTIFICATE REQUESTS
         =============================== */}
 
-        <section className="rounded-lg border bg-background">
-          <div className="flex items-center justify-between border-b p-5">
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-4">
             <div>
-              <h2 className="font-semibold">
+              <h3 className="font-semibold text-slate-950">
                 Recent Certificate Requests
-              </h2>
+              </h3>
 
-              <p className="text-xs text-muted-foreground">
-                Your latest certificate
-                request activity.
+              <p className="mt-1 text-xs text-slate-500">
+                Your latest certificate request activity.
               </p>
             </div>
 
             <Link
               to="/resident/certificates"
-              className="text-sm font-medium hover:underline"
+              className="shrink-0 text-sm font-medium text-emerald-700 hover:text-emerald-800 hover:underline"
             >
               View all
             </Link>
           </div>
 
-          <div className="divide-y">
+          <div className="divide-y divide-slate-100">
             {recentCertificateRequests
               .length === 0 && (
-              <div className="p-6 text-center">
-                <FileText className="mx-auto h-8 w-8 text-muted-foreground" />
+              <div className="p-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                  <FileText className="h-5 w-5" />
+                </div>
 
-                <p className="mt-3 text-sm font-medium">
-                  No certificate
-                  requests yet
+                <p className="mt-3 text-sm font-medium text-slate-800">
+                  No certificate requests yet
                 </p>
 
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Your certificate
-                  requests will appear
-                  here.
+                <p className="mt-1 text-xs text-slate-500">
+                  Your certificate requests will appear here.
                 </p>
               </div>
             )}
@@ -433,17 +463,17 @@ export function ResidentPortalDashboardPage() {
               (request) => (
                 <div
                   key={request.id}
-                  className="flex items-center justify-between gap-4 p-4"
+                  className="flex items-center justify-between gap-4 p-4 transition-colors hover:bg-slate-50/80"
                 >
                   <div className="min-w-0">
-                    <p className="truncate text-sm font-medium">
+                    <p className="truncate text-sm font-medium text-slate-950">
                       {request
                         .certificate_types
                         ?.name ??
                         "Certificate"}
                     </p>
 
-                    <p className="mt-1 text-xs text-muted-foreground">
+                    <p className="mt-1 text-xs text-slate-500">
                       {
                         request.request_number
                       }
@@ -456,7 +486,7 @@ export function ResidentPortalDashboardPage() {
 
                   <span
                     className={[
-                      "shrink-0 rounded-full px-2 py-1 text-xs font-medium capitalize",
+                      "shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold capitalize",
                       getStatusClass(
                         request.status
                       ),
@@ -474,41 +504,40 @@ export function ResidentPortalDashboardPage() {
             ANNOUNCEMENTS
         =============================== */}
 
-        <section className="rounded-lg border bg-background">
-          <div className="flex items-center justify-between border-b p-5">
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center justify-between gap-4 border-b border-slate-200 px-5 py-4">
             <div>
-              <h2 className="font-semibold">
+              <h3 className="font-semibold text-slate-950">
                 Recent Announcements
-              </h2>
+              </h3>
 
-              <p className="text-xs text-muted-foreground">
-                Latest barangay
-                announcements for you.
+              <p className="mt-1 text-xs text-slate-500">
+                Latest barangay announcements for you.
               </p>
             </div>
 
             <Link
               to="/resident/announcements"
-              className="text-sm font-medium hover:underline"
+              className="shrink-0 text-sm font-medium text-emerald-700 hover:text-emerald-800 hover:underline"
             >
               View all
             </Link>
           </div>
 
-          <div className="divide-y">
+          <div className="divide-y divide-slate-100">
             {recentAnnouncements.length ===
               0 && (
-              <div className="p-6 text-center">
-                <Bell className="mx-auto h-8 w-8 text-muted-foreground" />
+              <div className="p-8 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+                  <Bell className="h-5 w-5" />
+                </div>
 
-                <p className="mt-3 text-sm font-medium">
+                <p className="mt-3 text-sm font-medium text-slate-800">
                   No announcements
                 </p>
 
-                <p className="mt-1 text-xs text-muted-foreground">
-                  New barangay
-                  announcements will
-                  appear here.
+                <p className="mt-1 text-xs text-slate-500">
+                  New barangay announcements will appear here.
                 </p>
               </div>
             )}
@@ -519,33 +548,35 @@ export function ResidentPortalDashboardPage() {
                   key={
                     announcement.id
                   }
-                  className="p-4"
+                  className="p-4 transition-colors hover:bg-slate-50/80"
                 >
                   <div className="flex items-start gap-3">
-                    <Bell className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+                      <Bell className="h-4 w-4" />
+                    </div>
 
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
-                        <p className="font-medium">
+                        <p className="font-medium text-slate-950">
                           {
                             announcement.title
                           }
                         </p>
 
                         {announcement.is_pinned && (
-                          <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium uppercase">
+                          <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-700">
                             Pinned
                           </span>
                         )}
                       </div>
 
-                      <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+                      <p className="mt-1 line-clamp-2 text-sm text-slate-600">
                         {
                           announcement.content
                         }
                       </p>
 
-                      <p className="mt-2 text-xs text-muted-foreground">
+                      <p className="mt-2 text-xs text-slate-500">
                         {formatDate(
                           announcement.publish_at ??
                             announcement.created_at

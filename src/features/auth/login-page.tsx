@@ -1,5 +1,8 @@
 import { useState, type FormEvent } from "react"
-import { useNavigate } from "react-router-dom"
+import {
+    Link,
+    useNavigate,
+} from "react-router-dom"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,7 +34,10 @@ export function LoginPage() {
         setLoading(true)
 
         try {
-            await signIn(email, password)
+            await signIn(
+                email.trim(),
+                password
+            )
 
             navigate("/", {
                 replace: true,
@@ -76,32 +82,50 @@ export function LoginPage() {
                                 placeholder="admin@example.com"
                                 value={email}
                                 onChange={(event) =>
-                                    setEmail(event.target.value)
+                                    setEmail(
+                                        event.target.value
+                                    )
                                 }
                                 required
                                 autoComplete="email"
+                                disabled={loading}
                             />
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="password">
-                                Password
-                            </Label>
+                            <div className="flex items-center justify-between gap-4">
+                                <Label htmlFor="password">
+                                    Password
+                                </Label>
+
+                                <Link
+                                    to="/forgot-password"
+                                    className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+                                >
+                                    Forgot Password?
+                                </Link>
+                            </div>
 
                             <Input
                                 id="password"
                                 type="password"
                                 value={password}
                                 onChange={(event) =>
-                                    setPassword(event.target.value)
+                                    setPassword(
+                                        event.target.value
+                                    )
                                 }
                                 required
                                 autoComplete="current-password"
+                                disabled={loading}
                             />
                         </div>
 
                         {error && (
-                            <div className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive">
+                            <div
+                                role="alert"
+                                className="rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm font-medium text-destructive"
+                            >
                                 {error}
                             </div>
                         )}

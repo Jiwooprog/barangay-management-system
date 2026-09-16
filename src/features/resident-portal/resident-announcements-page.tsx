@@ -129,17 +129,17 @@ function getAudienceClass(
     announcement.purok_id ||
     announcement.puroks
   ) {
-    return "bg-blue-100 text-blue-800"
+    return "bg-blue-50 text-blue-700"
   }
 
   if (
     announcement.audience ===
     "all"
   ) {
-    return "bg-green-100 text-green-800"
+    return "bg-emerald-50 text-emerald-700"
   }
 
-  return "bg-violet-100 text-violet-800"
+  return "bg-violet-50 text-violet-700"
 }
 
 // ========================================
@@ -266,151 +266,189 @@ export function ResidentAnnouncementsPage() {
 
   return (
     <div className="space-y-6">
-      {/* HEADER */}
+      {/* ========================================
+          HEADER
+      ======================================== */}
 
-      <div>
-        <p className="text-sm text-muted-foreground">
-          Resident Portal
-        </p>
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+          <Megaphone className="h-5 w-5" />
+        </div>
 
-        <h1 className="text-2xl font-bold tracking-tight">
-          Announcements
-        </h1>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+            Resident Portal
+          </p>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          Stay updated with barangay
-          notices, activities, and
-          announcements relevant to
-          you.
-        </p>
+          <h2 className="mt-0.5 text-2xl font-semibold tracking-tight text-slate-950">
+            Announcements
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Stay updated with barangay notices, activities, and announcements relevant to you.
+          </p>
+        </div>
       </div>
 
-      {/* SUMMARY */}
+      {/* ========================================
+          SUMMARY
+      ======================================== */}
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
-                Available
-                Announcements
+              <p className="text-sm font-medium text-slate-600">
+                Available Announcements
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {
                   announcements.length
                 }
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Published notices for you
+              </p>
             </div>
 
-            <div className="rounded-lg bg-muted p-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
               <Megaphone className="h-5 w-5" />
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 Barangay Wide
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {
                   barangayWideCount
                 }
               </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Notices for all residents
+              </p>
             </div>
 
-            <div className="rounded-lg bg-muted p-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
               <Users className="h-5 w-5" />
             </div>
           </div>
         </div>
 
-        <div className="rounded-lg border bg-background p-5">
-          <div className="flex items-center justify-between">
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm font-medium text-slate-600">
                 My Purok
               </p>
 
-              <p className="mt-2 text-3xl font-bold">
+              <p className="mt-2 text-3xl font-bold tracking-tight text-slate-950">
                 {purokCount}
+              </p>
+
+              <p className="mt-1 text-xs text-slate-500">
+                Purok-specific notices
               </p>
             </div>
 
-            <div className="rounded-lg bg-muted p-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-100 text-blue-700">
               <MapPin className="h-5 w-5" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* SEARCH + FILTER */}
+      {/* ========================================
+          SEARCH + FILTER
+      ======================================== */}
 
-      <div className="grid gap-3 md:grid-cols-[1fr_220px]">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div className="mb-3">
+          <h3 className="text-sm font-semibold text-slate-950">
+            Search & Filters
+          </h3>
 
-          <Input
-            value={search}
-            onChange={(event) =>
-              setSearch(
-                event.target.value
-              )
-            }
-            placeholder="Search announcements..."
-            className="pl-9"
-          />
+          <p className="mt-0.5 text-xs text-slate-500">
+            Search notices or filter between barangay-wide and purok announcements.
+          </p>
         </div>
 
-        <select
-          value={filter}
-          onChange={(event) =>
-            setFilter(
-              event.target
-                .value as
-                | "all"
-                | "barangay"
-                | "purok"
-            )
-          }
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-        >
-          <option value="all">
-            All announcements
-          </option>
+        <div className="grid gap-3 md:grid-cols-[1fr_220px]">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
-          <option value="barangay">
-            Barangay wide
-          </option>
+            <Input
+              value={search}
+              onChange={(event) =>
+                setSearch(
+                  event.target.value
+                )
+              }
+              placeholder="Search announcements..."
+              className="h-10 rounded-xl border-slate-200 bg-white pl-9"
+            />
+          </div>
 
-          <option value="purok">
-            My purok
-          </option>
-        </select>
-      </div>
+          <select
+            value={filter}
+            onChange={(event) =>
+              setFilter(
+                event.target
+                  .value as
+                  | "all"
+                  | "barangay"
+                  | "purok"
+              )
+            }
+            className="h-10 rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100"
+          >
+            <option value="all">
+              All announcements
+            </option>
 
-      {/* ERROR */}
+            <option value="barangay">
+              Barangay wide
+            </option>
+
+            <option value="purok">
+              My purok
+            </option>
+          </select>
+        </div>
+      </section>
+
+      {/* ========================================
+          ERROR
+      ======================================== */}
 
       {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
-          <p className="font-medium text-destructive">
-            Unable to load
-            announcements
+        <div
+          role="alert"
+          className="rounded-2xl border border-red-200 bg-red-50 p-4"
+        >
+          <p className="font-semibold text-red-800">
+            Unable to load announcements
           </p>
 
           {error instanceof Error && (
-            <p className="mt-1 text-xs text-destructive">
+            <p className="mt-1 text-xs text-red-700">
               {error.message}
             </p>
           )}
         </div>
       )}
 
-      {/* LOADING */}
+      {/* ========================================
+          LOADING
+      ======================================== */}
 
       {isLoading && (
         <div className="grid gap-4 lg:grid-cols-2">
@@ -422,36 +460,37 @@ export function ResidentAnnouncementsPage() {
           ].map((item) => (
             <div
               key={item}
-              className="h-56 animate-pulse rounded-lg border bg-muted/40"
+              className="h-64 animate-pulse rounded-2xl border border-slate-200 bg-white"
             />
           ))}
         </div>
       )}
 
-      {/* EMPTY */}
+      {/* ========================================
+          EMPTY
+      ======================================== */}
 
       {!isLoading &&
         filteredAnnouncements.length ===
           0 && (
-          <div className="rounded-lg border bg-background px-6 py-16 text-center">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-muted">
-              <Bell className="h-6 w-6 text-muted-foreground" />
+          <div className="rounded-2xl border border-slate-200 bg-white px-6 py-16 text-center shadow-sm">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-500">
+              <Bell className="h-6 w-6" />
             </div>
 
-            <h2 className="mt-4 font-semibold">
+            <h3 className="mt-4 font-semibold text-slate-900">
               No announcements found
-            </h2>
+            </h3>
 
-            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-              There are currently no
-              published announcements
-              matching your selected
-              filter.
+            <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+              There are currently no published announcements matching your selected filter.
             </p>
           </div>
         )}
 
-      {/* ANNOUNCEMENT CARDS */}
+      {/* ========================================
+          ANNOUNCEMENT CARDS
+      ======================================== */}
 
       {!isLoading &&
         filteredAnnouncements.length >
@@ -465,17 +504,17 @@ export function ResidentAnnouncementsPage() {
                   key={
                     announcement.id
                   }
-                  className="flex flex-col rounded-lg border bg-background"
+                  className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
                 >
                   {/* CARD HEADER */}
 
-                  <div className="border-b p-5">
+                  <div className="border-b border-slate-200 px-5 py-4">
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
                         <div className="mb-3 flex flex-wrap gap-2">
                           <span
                             className={[
-                              "inline-flex rounded-full px-2.5 py-1 text-xs font-medium",
+                              "inline-flex rounded-full px-2.5 py-1 text-xs font-semibold",
                               getAudienceClass(
                                 announcement
                               ),
@@ -489,14 +528,14 @@ export function ResidentAnnouncementsPage() {
                           </span>
                         </div>
 
-                        <h2 className="text-lg font-semibold leading-tight">
+                        <h3 className="text-lg font-semibold leading-tight text-slate-950">
                           {announcement.title ??
                             "Barangay Announcement"}
-                        </h2>
+                        </h3>
                       </div>
 
-                      <div className="shrink-0 rounded-lg bg-muted p-2">
-                        <Megaphone className="h-5 w-5 text-muted-foreground" />
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+                        <Megaphone className="h-5 w-5" />
                       </div>
                     </div>
                   </div>
@@ -504,7 +543,7 @@ export function ResidentAnnouncementsPage() {
                   {/* CONTENT */}
 
                   <div className="flex-1 p-5">
-                    <p className="whitespace-pre-wrap text-sm leading-6 text-muted-foreground">
+                    <p className="whitespace-pre-wrap text-sm leading-6 text-slate-600">
                       {announcement.content ??
                         "No announcement details provided."}
                     </p>
@@ -512,9 +551,9 @@ export function ResidentAnnouncementsPage() {
 
                   {/* DETAILS */}
 
-                  <div className="space-y-3 border-t px-5 py-4">
-                    <div className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <CalendarDays className="mt-0.5 h-4 w-4 shrink-0" />
+                  <div className="space-y-3 border-t border-slate-100 bg-slate-50/60 px-5 py-4">
+                    <div className="flex items-start gap-2 text-xs text-slate-500">
+                      <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" />
 
                       <div>
                         <p>
@@ -547,8 +586,8 @@ export function ResidentAnnouncementsPage() {
 
                     {announcement.puroks
                       ?.name && (
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <MapPin className="h-4 w-4" />
+                      <div className="flex items-center gap-2 text-xs text-slate-500">
+                        <MapPin className="h-4 w-4 shrink-0 text-slate-400" />
 
                         <span>
                           {
@@ -566,18 +605,22 @@ export function ResidentAnnouncementsPage() {
           </div>
         )}
 
-      {/* RESULT COUNT */}
+      {/* ========================================
+          RESULT COUNT
+      ======================================== */}
 
       {!isLoading && (
-        <p className="text-sm text-muted-foreground">
-          {
-            filteredAnnouncements.length
-          }{" "}
-          {filteredAnnouncements.length ===
-          1
-            ? "announcement"
-            : "announcements"}
-        </p>
+        <div className="flex justify-end">
+          <span className="rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">
+            {
+              filteredAnnouncements.length
+            }{" "}
+            {filteredAnnouncements.length ===
+            1
+              ? "announcement"
+              : "announcements"}
+          </span>
+        </div>
       )}
     </div>
   )

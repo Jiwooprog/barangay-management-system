@@ -68,23 +68,23 @@ function StatCard({
   }>
 }) {
   return (
-    <div className="rounded-lg border bg-background p-5 shadow-sm">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm font-medium text-muted-foreground">
+    <div className="rounded-xl border bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md">
+      <div className="flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-foreground">
             {title}
           </p>
 
-          <p className="mt-2 text-3xl font-bold tracking-tight">
+          <p className="mt-2 text-3xl font-bold tracking-tight text-foreground">
             {value}
           </p>
 
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-xs leading-5 text-muted-foreground">
             {description}
           </p>
         </div>
 
-        <div className="rounded-md bg-muted p-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
           <Icon className="h-5 w-5" />
         </div>
       </div>
@@ -106,13 +106,13 @@ function ChartCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-lg border bg-background p-5 shadow-sm">
+    <div className="rounded-xl border bg-background p-5 shadow-sm">
       <div className="mb-5">
-        <h2 className="font-semibold">
+        <h2 className="font-semibold text-foreground">
           {title}
         </h2>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="mt-1 text-sm text-muted-foreground">
           {description}
         </p>
       </div>
@@ -182,7 +182,7 @@ function getBlotterStatusClass(
       return "bg-muted text-muted-foreground"
 
     case "closed":
-      return "bg-slate-100 text-slate-800"
+      return "bg-slate-100 text-foreground"
 
     default:
       return "bg-muted text-muted-foreground"
@@ -330,26 +330,25 @@ export function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* ====================================
           PAGE HEADER
       ==================================== */}
 
-      <div>
-        <div className="flex items-center gap-2">
+      <div className="flex items-start gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-700 text-white shadow-sm">
           <BarChart3 className="h-5 w-5" />
-
-          <h1 className="text-2xl font-bold tracking-tight">
-            Dashboard
-          </h1>
         </div>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          Barangay population,
-          household, demographic,
-          certificate, and peace &
-          order overview.
-        </p>
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Dashboard
+          </h1>
+
+          <p className="mt-1 max-w-3xl text-sm leading-6 text-muted-foreground">
+            Barangay population, household, certificates, demographics, and Peace & Order overview.
+          </p>
+        </div>
       </div>
 
       {/* ====================================
@@ -403,24 +402,28 @@ export function DashboardPage() {
           ACTIVE POPULATION
       ==================================== */}
 
-      <div className="rounded-lg border bg-background p-5">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">
-              Active Population
-            </p>
+      <div className="rounded-xl border bg-background p-5 shadow-sm sm:p-6">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-4">
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-emerald-700 text-white">
+              <Users className="h-5 w-5" />
+            </div>
 
-            <p className="mt-1 text-3xl font-bold">
-              {analytics
-                ?.totalActiveResidents ??
-                0}
-            </p>
+            <div>
+              <p className="text-sm font-semibold text-foreground">
+                Active Population
+              </p>
+
+              <p className="mt-1 text-3xl font-bold tracking-tight text-foreground">
+                {analytics
+                  ?.totalActiveResidents ??
+                  0}
+              </p>
+            </div>
           </div>
 
-          <p className="max-w-md text-sm text-muted-foreground">
-            Residents currently
-            marked active with an
-            active residency status.
+          <p className="max-w-md text-sm leading-6 text-muted-foreground">
+            Residents currently marked active with an active residency status.
           </p>
         </div>
       </div>
@@ -430,20 +433,20 @@ export function DashboardPage() {
       ==================================== */}
 
       <section className="space-y-4">
-        <div>
-          <div className="flex items-center gap-2">
+        <div className="flex items-start gap-3 border-b pb-4">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-900 text-white">
             <ShieldAlert className="h-5 w-5" />
-
-            <h2 className="text-xl font-semibold tracking-tight">
-              Peace & Order
-            </h2>
           </div>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Current blotter case
-            workload, mediation and
-            resolution activity.
-          </p>
+          <div>
+            <h2 className="text-xl font-semibold tracking-tight text-foreground">
+              Peace & Order
+            </h2>
+
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Current blotter case workload, mediation, and resolution activity.
+            </p>
+          </div>
         </div>
 
         {/* BLOTTER ERROR */}
@@ -961,7 +964,7 @@ export function DashboardPage() {
                 <Bar
                   dataKey="value"
                   name="Residents"
-                  fill="#16a34a"
+                  fill="#047857"
                   radius={[
                     0,
                     6,
@@ -1018,7 +1021,7 @@ export function DashboardPage() {
               <Bar
                 dataKey="value"
                 name="Residents"
-                fill="#7c3aed"
+                fill="#0f766e"
                 radius={[
                   6,
                   6,

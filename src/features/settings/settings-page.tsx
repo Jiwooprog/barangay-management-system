@@ -214,17 +214,23 @@ export function SettingsPage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Settings
-          </h1>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <Building2 className="h-5 w-5" />
+          </div>
 
-          <p className="text-sm text-muted-foreground">
-            Loading barangay settings...
-          </p>
+          <div>
+            <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+              Barangay Settings
+            </h2>
+
+            <p className="mt-1 text-sm text-slate-500">
+              Loading barangay settings...
+            </p>
+          </div>
         </div>
 
-        <div className="h-[520px] animate-pulse rounded-lg border bg-muted" />
+        <div className="h-[520px] animate-pulse rounded-2xl border border-slate-200 bg-slate-100" />
       </div>
     )
   }
@@ -232,14 +238,23 @@ export function SettingsPage() {
   if (error) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Settings
-          </h1>
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <Building2 className="h-5 w-5" />
+          </div>
+
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+            Barangay Settings
+          </h2>
         </div>
 
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-          Unable to load barangay settings.
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+        >
+          <p className="font-medium">
+            Unable to load barangay settings.
+          </p>
 
           {error instanceof
             Error && (
@@ -256,37 +271,37 @@ export function SettingsPage() {
     <div className="space-y-8">
       {/* HEADER */}
 
-      <div>
-        <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
           <Building2 className="h-5 w-5" />
-
-          <h1 className="text-2xl font-bold tracking-tight">
-            Barangay Settings
-          </h1>
         </div>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          Manage the official information
-          used throughout the Barangay
-          Management System.
-        </p>
+        <div>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+            Barangay Settings
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            Manage the official information used throughout the Barangay Management System.
+          </p>
+        </div>
       </div>
 
       {/* ACCESS NOTICE */}
 
-      <div className="rounded-lg border bg-muted/30 p-4">
+      <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
         <div className="flex items-start gap-3">
-          <ShieldCheck className="mt-0.5 h-5 w-5 shrink-0" />
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <ShieldCheck className="h-4 w-4" />
+          </div>
 
           <div>
-            <p className="text-sm font-medium">
+            <p className="text-sm font-medium text-slate-800">
               Super Admin Settings
             </p>
 
-            <p className="mt-1 text-xs text-muted-foreground">
-              Changes here affect official
-              barangay information used by
-              system-generated documents.
+            <p className="mt-1 text-xs text-slate-500">
+              Changes here affect official barangay information used by system-generated documents.
             </p>
           </div>
         </div>
@@ -295,7 +310,7 @@ export function SettingsPage() {
       {/* SUCCESS */}
 
       {saveSuccess && (
-        <div className="rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm font-medium text-emerald-800">
           {saveSuccess}
         </div>
       )}
@@ -303,22 +318,21 @@ export function SettingsPage() {
       {/* ERROR */}
 
       {saveError && (
-        <div className="rounded-md border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
+        <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
           {saveError}
         </div>
       )}
 
       {/* FORM */}
 
-      <section className="overflow-hidden rounded-lg border bg-background shadow-sm">
-        <div className="border-b p-5">
-          <h2 className="font-semibold">
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="border-b border-slate-200 px-5 py-4">
+          <h2 className="font-semibold text-slate-950">
             Barangay Information
           </h2>
 
-          <p className="mt-1 text-sm text-muted-foreground">
-            Official barangay identity and
-            contact information.
+          <p className="mt-1 text-sm text-slate-500">
+            Official barangay identity and contact information.
           </p>
         </div>
 
@@ -327,9 +341,11 @@ export function SettingsPage() {
 
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <MapPin className="h-4 w-4" />
+              </div>
 
-              <h3 className="font-medium">
+              <h3 className="font-medium text-slate-800">
                 Location
               </h3>
             </div>
@@ -356,6 +372,7 @@ export function SettingsPage() {
                     )
                   }
                   placeholder="Barangay name"
+                  className="h-10 rounded-xl border-slate-200 bg-white"
                 />
               </div>
 
@@ -380,6 +397,7 @@ export function SettingsPage() {
                     )
                   }
                   placeholder="Municipality or city"
+                  className="h-10 rounded-xl border-slate-200 bg-white"
                 />
               </div>
 
@@ -404,6 +422,7 @@ export function SettingsPage() {
                     )
                   }
                   placeholder="Province"
+                  className="h-10 rounded-xl border-slate-200 bg-white"
                 />
               </div>
 
@@ -425,20 +444,23 @@ export function SettingsPage() {
                     )
                   }
                   placeholder="Barangay Hall address"
+                  className="h-10 rounded-xl border-slate-200 bg-white"
                 />
               </div>
             </div>
           </div>
 
-          <div className="border-t" />
+          <div className="border-t border-slate-200" />
 
           {/* OFFICIAL */}
 
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <UserRound className="h-4 w-4" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <UserRound className="h-4 w-4" />
+              </div>
 
-              <h3 className="font-medium">
+              <h3 className="font-medium text-slate-800">
                 Barangay Official
               </h3>
             </div>
@@ -461,19 +483,22 @@ export function SettingsPage() {
                   )
                 }
                 placeholder="Full name of Punong Barangay"
+                className="h-10 rounded-xl border-slate-200 bg-white"
               />
             </div>
           </div>
 
-          <div className="border-t" />
+          <div className="border-t border-slate-200" />
 
           {/* CONTACT */}
 
           <div>
             <div className="mb-4 flex items-center gap-2">
-              <Phone className="h-4 w-4" />
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <Phone className="h-4 w-4" />
+              </div>
 
-              <h3 className="font-medium">
+              <h3 className="font-medium text-slate-800">
                 Contact Information
               </h3>
             </div>
@@ -485,7 +510,7 @@ export function SettingsPage() {
                 </Label>
 
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                   <Input
                     id="contact-number"
@@ -500,7 +525,7 @@ export function SettingsPage() {
                       )
                     }
                     placeholder="Contact number"
-                    className="pl-9"
+                    className="h-10 rounded-xl border-slate-200 bg-white pl-9"
                   />
                 </div>
               </div>
@@ -511,7 +536,7 @@ export function SettingsPage() {
                 </Label>
 
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
 
                   <Input
                     id="barangay-email"
@@ -527,7 +552,7 @@ export function SettingsPage() {
                       )
                     }
                     placeholder="barangay@example.com"
-                    className="pl-9"
+                    className="h-10 rounded-xl border-slate-200 bg-white pl-9"
                   />
                 </div>
               </div>
@@ -537,7 +562,7 @@ export function SettingsPage() {
 
         {/* FOOTER */}
 
-        <div className="flex justify-end border-t bg-muted/20 p-5">
+        <div className="flex justify-end border-t border-slate-200 bg-slate-50/60 px-5 py-4">
           <Button
             type="button"
             onClick={
@@ -546,6 +571,7 @@ export function SettingsPage() {
             disabled={
               updateSettings.isPending
             }
+            className="h-10 rounded-xl bg-emerald-700 px-4 text-white hover:bg-emerald-800"
           >
             <Save className="mr-2 h-4 w-4" />
 

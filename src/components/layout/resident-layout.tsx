@@ -1,6 +1,7 @@
 import {
   NavLink,
   Outlet,
+  useLocation,
   useNavigate,
 } from "react-router-dom"
 
@@ -51,10 +52,65 @@ const navigation = [
 ]
 
 // ========================================
+// HELPERS
+// ========================================
+
+function getPageTitle(
+  pathname: string
+) {
+  const currentItem =
+    navigation.find(
+      (item) =>
+        pathname === item.href ||
+        pathname.startsWith(
+          `${item.href}/`
+        )
+    )
+
+  return (
+    currentItem?.name ??
+    "Resident Portal"
+  )
+}
+
+function getInitials(
+  email?: string | null
+) {
+  if (!email) {
+    return "R"
+  }
+
+  const localPart =
+    email.split("@")[0] ??
+    ""
+
+  const parts =
+    localPart
+      .replace(
+        /[._-]+/g,
+        " "
+      )
+      .split(" ")
+      .filter(Boolean)
+
+  if (parts.length >= 2) {
+    return `${parts[0][0] ?? ""}${parts[1][0] ?? ""}`.toUpperCase()
+  }
+
+  return localPart
+    .slice(0, 2)
+    .toUpperCase()
+}
+
+// ========================================
 // SIDEBAR NAVIGATION
 // ========================================
 
-function SidebarNavigation() {
+function SidebarNavigation({
+  onNavigate,
+}: {
+  onNavigate?: () => void
+}) {
   return (
     <nav className="space-y-1 px-3">
       {navigation.map(
@@ -66,20 +122,40 @@ function SidebarNavigation() {
             <NavLink
               key={item.href}
               to={item.href}
+              onClick={
+                onNavigate
+              }
               className={({
                 isActive,
               }) =>
                 [
-                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  "group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all",
                   isActive
-                    ? "bg-primary text-primary-foreground"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    ? "bg-white text-slate-950 shadow-sm"
+                    : "text-emerald-50/85 hover:bg-white/10 hover:text-white",
                 ].join(" ")
               }
             >
-              <Icon className="h-4 w-4" />
+              {({
+                isActive,
+              }) => (
+                <>
+                  <span
+                    className={[
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors",
+                      isActive
+                        ? "bg-emerald-100 text-emerald-800"
+                        : "bg-white/5 text-emerald-100 group-hover:bg-white/10",
+                    ].join(" ")}
+                  >
+                    <Icon className="h-4 w-4" />
+                  </span>
 
-              {item.name}
+                  <span className="truncate">
+                    {item.name}
+                  </span>
+                </>
+              )}
             </NavLink>
           )
         }
@@ -95,12 +171,24 @@ function SidebarNavigation() {
 export function ResidentLayout() {
   const {
     user,
-    role,
     signOut,
   } = useAuth()
 
   const navigate =
     useNavigate()
+
+  const location =
+    useLocation()
+
+  const pageTitle =
+    getPageTitle(
+      location.pathname
+    )
+
+  const initials =
+    getInitials(
+      user?.email
+    )
 
   const handleLogout =
     async () => {
@@ -115,44 +203,72 @@ export function ResidentLayout() {
     }
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      {/* DESKTOP SIDEBAR */}
+    <div className="min-h-screen bg-slate-50">
+      {/* ========================================
+          DESKTOP SIDEBAR
+      ======================================== */}
 
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 border-r bg-background md:flex md:flex-col">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-72 border-r border-emerald-950/20 bg-[#063c30] md:flex md:flex-col">
         {/* BRAND */}
 
-        <div className="flex h-16 items-center border-b px-6">
-          <div>
-            <p className="font-bold">
-              Barangay BMS
-            </p>
+        <div className="flex min-h-20 items-center border-b border-white/10 px-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-sm">
+              <img
+                src="/barangay-logo.png"
+                alt="Laoac Barangay logo"
+                className="h-full w-full object-contain"
+              />
+            </div>
 
-            <p className="text-xs text-muted-foreground">
-              Resident Portal
-            </p>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-white">
+                Laoac Barangay
+              </p>
+
+              <p className="mt-0.5 text-xs text-emerald-100/75">
+                Resident Portal
+              </p>
+            </div>
           </div>
         </div>
 
         {/* NAVIGATION */}
 
         <div className="flex-1 overflow-y-auto py-4">
+          <div className="px-6 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-100/50">
+            Resident Services
+          </div>
+
           <SidebarNavigation />
         </div>
 
         {/* USER */}
 
-        <div className="border-t p-4">
-          <p className="truncate text-sm font-medium">
-            {user?.email}
-          </p>
+        <div className="border-t border-white/10 p-3">
+          <div className="rounded-xl bg-white/5 p-3">
+            <div className="flex items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-950">
+                {initials}
+              </div>
 
-          <p className="mb-3 text-xs text-muted-foreground">
-            {role}
-          </p>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium text-white">
+                  {user?.email ??
+                    "Resident"}
+                </p>
+
+                <p className="mt-0.5 text-xs text-emerald-100/65">
+                  Resident
+                </p>
+              </div>
+            </div>
+          </div>
 
           <Button
-            variant="outline"
-            className="w-full justify-start"
+            type="button"
+            variant="ghost"
+            className="mt-2 h-10 w-full justify-start rounded-xl text-emerald-50 hover:bg-white/10 hover:text-white"
             onClick={
               handleLogout
             }
@@ -164,21 +280,24 @@ export function ResidentLayout() {
         </div>
       </aside>
 
-      {/* MAIN */}
+      {/* ========================================
+          MAIN
+      ======================================== */}
 
-      <div className="md:pl-64">
+      <div className="md:pl-72">
         {/* HEADER */}
 
-        <header className="sticky top-0 z-20 flex h-16 items-center border-b bg-background px-4 md:px-6">
+        <header className="sticky top-0 z-20 flex h-16 items-center border-b border-slate-200 bg-white/95 px-4 backdrop-blur md:px-6">
           {/* MOBILE MENU */}
 
           <Sheet>
             <SheetTrigger
               render={
                 <Button
+                  type="button"
                   variant="ghost"
                   size="icon"
-                  className="mr-2 md:hidden"
+                  className="mr-2 rounded-lg md:hidden"
                 />
               }
             >
@@ -187,55 +306,109 @@ export function ResidentLayout() {
 
             <SheetContent
               side="left"
-              className="w-64 p-0"
+              className="w-72 border-r-0 bg-[#063c30] p-0 text-white"
             >
-              <div className="flex h-16 items-center border-b px-6">
-                <div>
-                  <p className="font-bold">
-                    Barangay BMS
-                  </p>
+              <div className="flex min-h-20 items-center border-b border-white/10 px-4">
+                <div className="flex min-w-0 items-center gap-3">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white p-1 shadow-sm">
+                    <img
+                      src="/barangay-logo.png"
+                      alt="Laoac Barangay logo"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
 
-                  <p className="text-xs text-muted-foreground">
-                    Resident Portal
-                  </p>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-white">
+                      Laoac Barangay
+                    </p>
+
+                    <p className="mt-0.5 text-xs text-emerald-100/75">
+                      Resident Portal
+                    </p>
+                  </div>
                 </div>
               </div>
 
               <div className="py-4">
+                <div className="px-6 pb-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-100/50">
+                  Resident Services
+                </div>
+
                 <SidebarNavigation />
+              </div>
+
+              <div className="absolute inset-x-0 bottom-0 border-t border-white/10 p-3">
+                <div className="rounded-xl bg-white/5 p-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-emerald-200 text-xs font-bold text-emerald-950">
+                      {initials}
+                    </div>
+
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium text-white">
+                        {user?.email ??
+                          "Resident"}
+                      </p>
+
+                      <p className="mt-0.5 text-xs text-emerald-100/65">
+                        Resident
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="mt-2 h-10 w-full justify-start rounded-xl text-emerald-50 hover:bg-white/10 hover:text-white"
+                  onClick={
+                    handleLogout
+                  }
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+
+                  Logout
+                </Button>
               </div>
             </SheetContent>
           </Sheet>
 
           {/* HEADER CONTENT */}
 
-          <div className="flex flex-1 items-center justify-between">
-            <div>
-              <p className="font-medium">
-                Resident Portal
+          <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
+            <div className="min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-700">
+                Laoac Barangay
               </p>
 
-              <p className="text-xs text-muted-foreground">
-                Barangay Management
-                System
-              </p>
+              <h1 className="truncate text-base font-semibold text-slate-950">
+                {pageTitle}
+              </h1>
             </div>
 
-            <div className="hidden text-right sm:block">
-              <p className="text-sm font-medium">
-                {user?.email}
-              </p>
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="hidden min-w-0 text-right sm:block">
+                <p className="max-w-[260px] truncate text-sm font-medium text-slate-800">
+                  {user?.email ??
+                    "Resident"}
+                </p>
 
-              <p className="text-xs text-muted-foreground">
-                Resident
-              </p>
+                <p className="text-xs text-slate-500">
+                  Resident
+                </p>
+              </div>
+
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-emerald-200 bg-emerald-50 text-xs font-semibold text-emerald-800">
+                {initials}
+              </div>
             </div>
           </div>
         </header>
 
         {/* PAGE CONTENT */}
 
-        <main className="p-4 md:p-6">
+        <main className="mx-auto w-full max-w-[1600px] p-4 md:p-6">
           <Outlet />
         </main>
       </div>

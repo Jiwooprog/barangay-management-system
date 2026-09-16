@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+
 import {
   BriefcaseBusiness,
   CalendarDays,
@@ -110,14 +112,52 @@ function StatusBadge({
   return (
     <span
       className={[
-        "inline-flex rounded-full px-2.5 py-1 text-xs font-medium",
+        "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
         value
-          ? "bg-green-100 text-green-800"
-          : "bg-muted text-muted-foreground",
+          ? "bg-emerald-50 text-emerald-700"
+          : "bg-slate-100 text-slate-600",
       ].join(" ")}
     >
+      <span
+        className={[
+          "h-1.5 w-1.5 rounded-full",
+          value
+            ? "bg-emerald-500"
+            : "bg-slate-400",
+        ].join(" ")}
+      />
+
       {value ? "Yes" : "No"}
     </span>
+  )
+}
+
+function InfoField({
+  label,
+  value,
+  capitalize = false,
+}: {
+  label: string
+  value: ReactNode
+  capitalize?: boolean
+}) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+        {label}
+      </p>
+
+      <p
+        className={[
+          "mt-1.5 text-sm font-medium text-slate-900",
+          capitalize
+            ? "capitalize"
+            : "",
+        ].join(" ")}
+      >
+        {value}
+      </p>
+    </div>
   )
 }
 
@@ -140,12 +180,18 @@ export function ResidentProfilePage() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="h-24 animate-pulse rounded-lg border bg-muted/40" />
+        <div className="space-y-2">
+          <div className="h-8 w-48 animate-pulse rounded-lg bg-slate-200" />
+
+          <div className="h-4 w-72 max-w-full animate-pulse rounded bg-slate-100" />
+        </div>
+
+        <div className="h-36 animate-pulse rounded-2xl border border-slate-200 bg-white" />
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="h-80 animate-pulse rounded-lg border bg-muted/40" />
+          <div className="h-96 animate-pulse rounded-2xl border border-slate-200 bg-white" />
 
-          <div className="h-80 animate-pulse rounded-lg border bg-muted/40" />
+          <div className="h-96 animate-pulse rounded-2xl border border-slate-200 bg-white" />
         </div>
       </div>
     )
@@ -160,18 +206,20 @@ export function ResidentProfilePage() {
     !profile
   ) {
     return (
-      <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-6">
-        <h2 className="font-semibold text-destructive">
+      <div
+        role="alert"
+        className="rounded-2xl border border-red-200 bg-red-50 p-6"
+      >
+        <h2 className="font-semibold text-red-800">
           Unable to load profile
         </h2>
 
-        <p className="mt-2 text-sm text-muted-foreground">
-          Your resident information
-          could not be retrieved.
+        <p className="mt-2 text-sm text-red-700/80">
+          Your resident information could not be retrieved.
         </p>
 
         {error instanceof Error && (
-          <p className="mt-2 text-xs text-destructive">
+          <p className="mt-2 text-xs text-red-700">
             {error.message}
           </p>
         )}
@@ -202,51 +250,62 @@ export function ResidentProfilePage() {
 
   return (
     <div className="space-y-6">
-      {/* HEADER */}
+      {/* ========================================
+          PAGE HEADER
+      ======================================== */}
 
-      <div>
-        <p className="text-sm text-muted-foreground">
-          Resident Portal
-        </p>
+      <div className="flex items-center gap-3">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+          <UserRound className="h-5 w-5" />
+        </div>
 
-        <h1 className="text-2xl font-bold tracking-tight">
-          My Profile
-        </h1>
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+            Resident Portal
+          </p>
 
-        <p className="mt-1 text-sm text-muted-foreground">
-          View your official resident
-          information.
-        </p>
+          <h2 className="mt-0.5 text-2xl font-semibold tracking-tight text-slate-950">
+            My Profile
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500">
+            View your official resident information.
+          </p>
+        </div>
       </div>
 
-      {/* PROFILE SUMMARY */}
+      {/* ========================================
+          PROFILE SUMMARY
+      ======================================== */}
 
-      <section className="rounded-lg border bg-background p-5">
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted">
-            <UserRound className="h-9 w-9 text-muted-foreground" />
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:p-6">
+          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-800">
+            <UserRound className="h-9 w-9" />
           </div>
 
-          <div>
-            <h2 className="text-xl font-bold">
+          <div className="min-w-0 flex-1">
+            <h3 className="text-xl font-semibold text-slate-950">
               {fullName}
-            </h2>
+            </h3>
 
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm font-medium text-slate-500">
               {profile.resident_number}
             </p>
 
             <div className="mt-3 flex flex-wrap gap-2">
-              <span className="rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium capitalize text-green-800">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold capitalize text-emerald-700">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+
                 {profile.residency_status}
               </span>
 
-              <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium">
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
                 {profile.puroks?.name ??
                   "No Purok"}
               </span>
 
-              <span className="rounded-full bg-muted px-2.5 py-1 text-xs font-medium">
+              <span className="rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
                 {profile.households
                   ?.household_number ??
                   "No Household"}
@@ -256,154 +315,141 @@ export function ResidentProfilePage() {
         </div>
       </section>
 
-      {/* PERSONAL + ADDRESS */}
+      {/* ========================================
+          PERSONAL + CONTACT
+      ======================================== */}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* PERSONAL */}
+        {/* PERSONAL INFORMATION */}
 
-        <section className="rounded-lg border bg-background">
-          <div className="flex items-center gap-2 border-b p-5">
-            <UserRound className="h-5 w-5" />
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+              <UserRound className="h-4 w-4" />
+            </div>
 
-            <h2 className="font-semibold">
-              Personal Information
-            </h2>
+            <div>
+              <h3 className="font-semibold text-slate-950">
+                Personal Information
+              </h3>
+
+              <p className="mt-0.5 text-xs text-slate-500">
+                Basic details from your resident record.
+              </p>
+            </div>
           </div>
 
-          <div className="grid gap-5 p-5 sm:grid-cols-2">
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Full Name
-              </p>
+          <div className="grid gap-x-6 gap-y-5 p-5 sm:grid-cols-2">
+            <InfoField
+              label="Full Name"
+              value={fullName}
+            />
 
-              <p className="mt-1 font-medium">
-                {fullName}
-              </p>
-            </div>
+            <InfoField
+              label="Resident Number"
+              value={profile.resident_number}
+            />
 
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Resident Number
-              </p>
+            <InfoField
+              label="Birthday"
+              value={formatDate(
+                profile.birthday
+              )}
+            />
 
-              <p className="mt-1 font-medium">
-                {profile.resident_number}
-              </p>
-            </div>
+            <InfoField
+              label="Age"
+              value={age ?? "—"}
+            />
 
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Birthday
-              </p>
+            <InfoField
+              label="Gender"
+              value={profile.gender}
+              capitalize
+            />
 
-              <p className="mt-1 font-medium">
-                {formatDate(
-                  profile.birthday
-                )}
-              </p>
-            </div>
+            <InfoField
+              label="Civil Status"
+              value={
+                profile.civil_status ??
+                "—"
+              }
+              capitalize
+            />
 
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Age
-              </p>
+            <InfoField
+              label="Birthplace"
+              value={
+                profile.birthplace ??
+                "—"
+              }
+            />
 
-              <p className="mt-1 font-medium">
-                {age ?? "—"}
-              </p>
-            </div>
+            <InfoField
+              label="Nationality"
+              value={
+                profile.nationality ??
+                "—"
+              }
+            />
 
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Gender
-              </p>
-
-              <p className="mt-1 font-medium capitalize">
-                {profile.gender}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Civil Status
-              </p>
-
-              <p className="mt-1 font-medium capitalize">
-                {profile.civil_status ??
-                  "—"}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Birthplace
-              </p>
-
-              <p className="mt-1 font-medium">
-                {profile.birthplace ??
-                  "—"}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Nationality
-              </p>
-
-              <p className="mt-1 font-medium">
-                {profile.nationality ??
-                  "—"}
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xs text-muted-foreground">
-                Religion
-              </p>
-
-              <p className="mt-1 font-medium">
-                {profile.religion ??
-                  "—"}
-              </p>
-            </div>
+            <InfoField
+              label="Religion"
+              value={
+                profile.religion ??
+                "—"
+              }
+            />
           </div>
         </section>
 
-        {/* CONTACT */}
+        {/* CONTACT & ADDRESS */}
 
-        <section className="rounded-lg border bg-background">
-          <div className="flex items-center gap-2 border-b p-5">
-            <MapPin className="h-5 w-5" />
+        <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-4">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+              <MapPin className="h-4 w-4" />
+            </div>
 
-            <h2 className="font-semibold">
-              Contact & Address
-            </h2>
+            <div>
+              <h3 className="font-semibold text-slate-950">
+                Contact & Address
+              </h3>
+
+              <p className="mt-0.5 text-xs text-slate-500">
+                Your registered contact and residency details.
+              </p>
+            </div>
           </div>
 
-          <div className="space-y-5 p-5">
-            <div className="flex gap-3">
-              <MapPin className="mt-1 h-4 w-4 text-muted-foreground" />
+          <div className="divide-y divide-slate-100 px-5">
+            <div className="flex gap-3 py-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <MapPin className="h-4 w-4" />
+              </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Address
                 </p>
 
-                <p className="mt-1 font-medium">
+                <p className="mt-1 text-sm font-medium text-slate-900">
                   {address || "—"}
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <House className="mt-1 h-4 w-4 text-muted-foreground" />
+            <div className="flex gap-3 py-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <House className="h-4 w-4" />
+              </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Household
                 </p>
 
-                <p className="mt-1 font-medium">
+                <p className="mt-1 text-sm font-medium text-slate-900">
                   {profile.households
                     ?.household_number ??
                     "Not assigned"}
@@ -411,7 +457,7 @@ export function ResidentProfilePage() {
 
                 {profile.households
                   ?.housing_status && (
-                  <p className="text-xs capitalize text-muted-foreground">
+                  <p className="mt-0.5 text-xs capitalize text-slate-500">
                     {
                       profile.households
                         .housing_status
@@ -421,45 +467,51 @@ export function ResidentProfilePage() {
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <Phone className="mt-1 h-4 w-4 text-muted-foreground" />
+            <div className="flex gap-3 py-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <Phone className="h-4 w-4" />
+              </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Contact Number
                 </p>
 
-                <p className="mt-1 font-medium">
+                <p className="mt-1 break-words text-sm font-medium text-slate-900">
                   {profile.contact_number ??
                     "—"}
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <Mail className="mt-1 h-4 w-4 text-muted-foreground" />
+            <div className="flex gap-3 py-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <Mail className="h-4 w-4" />
+              </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Email
                 </p>
 
-                <p className="mt-1 font-medium">
+                <p className="mt-1 break-all text-sm font-medium text-slate-900">
                   {profile.email ??
                     "—"}
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <CalendarDays className="mt-1 h-4 w-4 text-muted-foreground" />
+            <div className="flex gap-3 py-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
+                <CalendarDays className="h-4 w-4" />
+              </div>
 
-              <div>
-                <p className="text-xs text-muted-foreground">
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                   Residency Start Date
                 </p>
 
-                <p className="mt-1 font-medium">
+                <p className="mt-1 text-sm font-medium text-slate-900">
                   {formatDate(
                     profile.residency_start_date
                   )}
@@ -470,61 +522,74 @@ export function ResidentProfilePage() {
         </section>
       </div>
 
-      {/* OCCUPATION + EDUCATION */}
+      {/* ========================================
+          OCCUPATION + EDUCATION
+      ======================================== */}
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="rounded-lg border bg-background p-5">
-          <div className="flex items-center gap-2">
-            <BriefcaseBusiness className="h-5 w-5" />
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+              <BriefcaseBusiness className="h-5 w-5" />
+            </div>
 
-            <h2 className="font-semibold">
-              Occupation
-            </h2>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Occupation
+              </p>
+
+              <p className="mt-1 text-base font-semibold text-slate-950">
+                {profile.occupation ??
+                  "Not specified"}
+              </p>
+            </div>
           </div>
-
-          <p className="mt-4 font-medium">
-            {profile.occupation ??
-              "Not specified"}
-          </p>
         </section>
 
-        <section className="rounded-lg border bg-background p-5">
-          <div className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5" />
+        <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+              <GraduationCap className="h-5 w-5" />
+            </div>
 
-            <h2 className="font-semibold">
-              Educational Attainment
-            </h2>
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Educational Attainment
+              </p>
+
+              <p className="mt-1 text-base font-semibold text-slate-950">
+                {profile.educational_attainment ??
+                  "Not specified"}
+              </p>
+            </div>
           </div>
-
-          <p className="mt-4 font-medium">
-            {profile.educational_attainment ??
-              "Not specified"}
-          </p>
         </section>
       </div>
 
-      {/* SPECIAL SECTORS */}
+      {/* ========================================
+          SPECIAL SECTORS
+      ======================================== */}
 
-      <section className="rounded-lg border bg-background">
-        <div className="flex items-center gap-2 border-b p-5">
-          <ShieldCheck className="h-5 w-5" />
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <ShieldCheck className="h-4 w-4" />
+          </div>
 
           <div>
-            <h2 className="font-semibold">
+            <h3 className="font-semibold text-slate-950">
               Registrations & Special Sectors
-            </h2>
+            </h3>
 
-            <p className="text-xs text-muted-foreground">
-              Classifications recorded
-              by the barangay.
+            <p className="mt-0.5 text-xs text-slate-500">
+              Classifications recorded by the barangay.
             </p>
           </div>
         </div>
 
-        <div className="grid gap-5 p-5 sm:grid-cols-2 lg:grid-cols-3">
-          <div>
-            <p className="text-sm font-medium">
+        <div className="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               Registered Voter
             </p>
 
@@ -538,7 +603,7 @@ export function ResidentProfilePage() {
 
             {profile.is_voter &&
               profile.precinct_number && (
-                <p className="mt-2 text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-slate-500">
                   Precinct:{" "}
                   {
                     profile.precinct_number
@@ -547,8 +612,8 @@ export function ResidentProfilePage() {
               )}
           </div>
 
-          <div>
-            <p className="text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               4Ps
             </p>
 
@@ -561,8 +626,8 @@ export function ResidentProfilePage() {
             </div>
           </div>
 
-          <div>
-            <p className="text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               PWD
             </p>
 
@@ -576,7 +641,7 @@ export function ResidentProfilePage() {
 
             {profile.is_pwd &&
               profile.pwd_id_number && (
-                <p className="mt-2 text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-slate-500">
                   ID:{" "}
                   {
                     profile.pwd_id_number
@@ -585,8 +650,8 @@ export function ResidentProfilePage() {
               )}
           </div>
 
-          <div>
-            <p className="text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               Senior Citizen
             </p>
 
@@ -600,7 +665,7 @@ export function ResidentProfilePage() {
 
             {profile.is_senior_citizen &&
               profile.senior_citizen_id_number && (
-                <p className="mt-2 text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-slate-500">
                   ID:{" "}
                   {
                     profile.senior_citizen_id_number
@@ -609,8 +674,8 @@ export function ResidentProfilePage() {
               )}
           </div>
 
-          <div>
-            <p className="text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               Solo Parent
             </p>
 
@@ -624,7 +689,7 @@ export function ResidentProfilePage() {
 
             {profile.is_solo_parent &&
               profile.solo_parent_id_number && (
-                <p className="mt-2 text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-slate-500">
                   ID:{" "}
                   {
                     profile.solo_parent_id_number
@@ -633,8 +698,8 @@ export function ResidentProfilePage() {
               )}
           </div>
 
-          <div>
-            <p className="text-sm font-medium">
+          <div className="rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+            <p className="text-sm font-semibold text-slate-800">
               Indigenous People
             </p>
 
@@ -649,66 +714,72 @@ export function ResidentProfilePage() {
         </div>
       </section>
 
-      {/* EMERGENCY CONTACT */}
+      {/* ========================================
+          EMERGENCY CONTACT
+      ======================================== */}
 
-      <section className="rounded-lg border bg-background">
-        <div className="flex items-center gap-2 border-b p-5">
-          <HeartHandshake className="h-5 w-5" />
+      <section className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex items-center gap-3 border-b border-slate-200 px-5 py-4">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+            <HeartHandshake className="h-4 w-4" />
+          </div>
 
-          <h2 className="font-semibold">
-            Emergency Contact
-          </h2>
+          <div>
+            <h3 className="font-semibold text-slate-950">
+              Emergency Contact
+            </h3>
+
+            <p className="mt-0.5 text-xs text-slate-500">
+              Contact information recorded for emergencies.
+            </p>
+          </div>
         </div>
 
         <div className="grid gap-5 p-5 sm:grid-cols-3">
-          <div>
-            <p className="text-xs text-muted-foreground">
-              Name
-            </p>
+          <InfoField
+            label="Name"
+            value={
+              profile.emergency_contact_name ??
+              "—"
+            }
+          />
 
-            <p className="mt-1 font-medium">
-              {profile.emergency_contact_name ??
-                "—"}
-            </p>
-          </div>
+          <InfoField
+            label="Contact Number"
+            value={
+              profile.emergency_contact_number ??
+              "—"
+            }
+          />
 
-          <div>
-            <p className="text-xs text-muted-foreground">
-              Contact Number
-            </p>
-
-            <p className="mt-1 font-medium">
-              {profile.emergency_contact_number ??
-                "—"}
-            </p>
-          </div>
-
-          <div>
-            <p className="text-xs text-muted-foreground">
-              Relationship
-            </p>
-
-            <p className="mt-1 font-medium">
-              {profile.emergency_contact_relationship ??
-                "—"}
-            </p>
-          </div>
+          <InfoField
+            label="Relationship"
+            value={
+              profile.emergency_contact_relationship ??
+              "—"
+            }
+          />
         </div>
       </section>
 
-      {/* NOTICE */}
+      {/* ========================================
+          NOTICE
+      ======================================== */}
 
-      <div className="rounded-lg border bg-muted/30 p-4">
-        <p className="text-sm font-medium">
-          Need to update your information?
-        </p>
+      <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-4">
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800">
+          <ShieldCheck className="h-4 w-4" />
+        </div>
 
-        <p className="mt-1 text-xs text-muted-foreground">
-          Contact barangay staff if
-          any official information
-          shown here needs to be
-          corrected.
-        </p>
+        <div>
+          <p className="text-sm font-semibold text-slate-900">
+            Need to update your information?
+          </p>
+
+          <p className="mt-1 text-xs leading-5 text-slate-600">
+            Contact barangay staff if any official information shown here needs to be corrected.
+          </p>
+        </div>
       </div>
     </div>
   )
